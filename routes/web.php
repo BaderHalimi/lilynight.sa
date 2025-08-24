@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SocialiteController;
 
+use Livewire\Volt\Volt;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,13 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+    // Route::get('/provider', function () {
+    //     dd("Provider");
+    // })->name('provider');
+    
+Volt::route('StartProvider', 'pages.provider.Start_Provider')
+    ->middleware(['auth', 'verified'])
+    ->name('ProviderCommercial');
 require __DIR__.'/auth.php';
 
 // routes/web.php

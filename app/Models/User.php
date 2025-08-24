@@ -50,5 +50,18 @@ class User extends Authenticatable implements AuthMustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+
     ];
+
+    public function providers()
+    {
+        return $this->hasMany(Providers::class, 'owner_id');
+    }
+    public function jobs()
+    {
+        return $this->hasMany(ProvidersJobs::class, 'user_id');
+    }
+    
+
+    
 }

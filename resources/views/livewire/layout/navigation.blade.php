@@ -55,7 +55,15 @@ new class extends Component
                         <x-dropdown-link :href="route('profile')" wire:navigate>
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
+                        <x-dropdown-link :href="route('user.Dashboard.overview')" wire:navigate>
+                            {{ __('لوحة التحكم') }}
+                        </x-dropdown-link>
+                        @if(!auth()->user()->providers()->exists())
+                            <x-dropdown-link :href="route('ProviderCommercial')" wire:navigate>
+                                {{ __('ابداء نشاطك التجاري الان') }}
+                            </x-dropdown-link>
+                        @endif
+                    
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
                             <x-dropdown-link>
@@ -97,7 +105,10 @@ new class extends Component
                 <x-responsive-nav-link :href="route('profile')" wire:navigate>
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                @if (!auth()->user()->providers()->exists())
 
+
+                @endif
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
                     <x-responsive-nav-link>
