@@ -36,24 +36,32 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+<div class="flex items-center justify-center mt-24 mb-24 mx-auto p-6">
+    <div class="max-w-lg w-full">
+        <div class="border border-gray-200 bg-white text-gray-900 shadow-2xl rounded-2xl">
+            <div class="flex flex-col items-center p-8">
+                <img src="https://lilium-night.com/wp-content/uploads/2024/07/logo-1-1.png" alt="شعار" class="w-20 h-20 mx-auto mb-4">
+                <h3 class="text-3xl font-bold text-primary">تأكيد البريد الإلكتروني</h3>
+                <p class="text-sm text-gray-500 mt-2">شكرًا لتسجيلك! قبل أن تبدأ، يرجى تأكيد بريدك الإلكتروني من خلال الرابط الذي أرسلناه إليك.</p>
+            </div>
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+            <div class="p-8 pt-0">
+                @if (session('status') == 'verification-link-sent')
+                <div class="mb-4 font-medium text-center text-sm text-primary">
+                    {{ __('تم إرسال رابط التحقق إلى بريدك الإلكتروني.') }}
+                </div>
+                @endif
+
+                <div class="mt-4 flex items-center justify-between">
+                    <x-primary-button wire:click="sendVerification" class="bg-primary/80 hover:bg-primary text-white py-2 px-6 rounded-lg">
+                        {{ __('إعادة إرسال رابط التحقق') }}
+                    </x-primary-button>
+
+                    <button wire:click="logout" type="button" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md">
+                        {{ __('تسجيل الخروج') }}
+                    </button>
+                </div>
+            </div>
         </div>
-    @endif
-
-    <div class="mt-4 flex items-center justify-between">
-        <x-primary-button wire:click="sendVerification">
-            {{ __('Resend Verification Email') }}
-        </x-primary-button>
-
-        <button wire:click="logout" type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            {{ __('Log Out') }}
-        </button>
     </div>
 </div>

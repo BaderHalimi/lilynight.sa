@@ -45,77 +45,37 @@
 </head>
 
 <body class="font-sans">
-    @livewire('front.nav')
+    <!-- @livewire('front.nav') -->
+    <div class="absolute top-6 left-6" bis_skin_checked="1">
+        <a href="{{ route('home') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-primary/30 hover:text-accent-foreground h-10 px-4 py-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-2">
+                <path d="m12 19-7-7 7-7"></path>
+                <path d="M19 12H5"></path>
+            </svg> العودة للرئيسية</a>
+    </div>
     {{ $slot }}
-    <footer class="bg-slate-900 text-white py-12 px-[5%]">
-        <div class="mx-[5%]">
-            <div class="container mx-auto px-4" bis_skin_checked="1">
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8" bis_skin_checked="1">
-                    <div bis_skin_checked="1">
-                        <div class="flex items-center mb-4 cursor-pointer" bis_skin_checked="1"><img
-                                alt="logo" class="w-10 h-10 ml-3"
-                                src="{{asset('assets/logo/Ticket-Window-01.png')}}"><span
-                                class="text-xl font-bold text-white">{{ config('app.name') }}</span></div>
-                        <p class="text-gray-400 text-sm leading-relaxed">البوابة الذكية لحجوزات الفعاليات والمطاعم
-                            والمعارض، بوابتك نحو تجربة فريدة.</p>
-                    </div>
-                    <div bis_skin_checked="1"><span class="text-lg font-semibold mb-4 block text-gray-200">خدماتنا</span>
-                        <ul class="space-y-3 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-primary transition-colors">إدارة الفعاليات</a></li>
-                            <li><a href="#" class="hover:text-primary transition-colors">حجوزات المطاعم</a></li>
-                            <li><a href="#" class="hover:text-primary transition-colors">تنظيم المعارض</a></li>
-                            <li><a href="#" class="hover:text-primary transition-colors">نظام التحقق</a></li>
-                        </ul>
-                    </div>
-                    <div bis_skin_checked="1"><span class="text-lg font-semibold mb-4 block text-gray-200">روابط
-                            سريعة</span>
-                        <ul class="space-y-3 text-sm text-gray-400">
-                            <li><a href="#" class="hover:text-primary transition-colors">الرئيسية</a></li>
-                            <!-- <li><a href="" class="hover:text-primary transition-colors">المميزات</a></li>
-                            <li><a href="#" class="hover:text-primary transition-colors">الأدوار والرحلات</a></li> -->
-                            <li><a href="#" class="hover:text-primary transition-colors">الباقات</a></li>
-                            <li><a href="#" class="hover:text-primary transition-colors">انضم كتاجر</a></li>
-                        </ul>
-                    </div>
-                    <div bis_skin_checked="1"><span class="text-lg font-semibold mb-4 block text-gray-200">تواصل
-                            معنا</span>
-                        <div class="space-y-3 text-sm text-gray-400" bis_skin_checked="1">
-                            <p>البريد: <a href="mailto:info@shobaktickets.com"
-                                    class="hover:text-primary transition-colors">info@shobaktickets.com</a></p>
-                            <p>الهاتف: <a href="tel:+966111234567" class="hover:text-primary transition-colors">+966 11
-                                    XXX XXXX</a></p>
-                            <p>العنوان: الرياض، المملكة العربية السعودية</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="border-t border-gray-800 mt-8 pt-8 text-center" bis_skin_checked="1">
-                    <p class="text-gray-500 text-sm">© 2025 شباك التذاكر. جميع الحقوق محفوظة.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+
     @livewireScripts
     @stack('scripts')
     <script>
-    function initBurgerMenu() {
-        let burgerBtn = document.getElementById('burgerBtn');
-        let mobileMenu = document.getElementById('mobileMenu');
+        function initBurgerMenu() {
+            let burgerBtn = document.getElementById('burgerBtn');
+            let mobileMenu = document.getElementById('mobileMenu');
 
-        if (burgerBtn && mobileMenu) {
-            // تخلص من كل الأحداث القديمة عن طريق استبدال العنصر بنفسه (clone)
-            const newBtn = burgerBtn.cloneNode(true);
-            burgerBtn.parentNode.replaceChild(newBtn, burgerBtn);
-            burgerBtn = newBtn;
+            if (burgerBtn && mobileMenu) {
+                // تخلص من كل الأحداث القديمة عن طريق استبدال العنصر بنفسه (clone)
+                const newBtn = burgerBtn.cloneNode(true);
+                burgerBtn.parentNode.replaceChild(newBtn, burgerBtn);
+                burgerBtn = newBtn;
 
-            burgerBtn.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
-            });
+                burgerBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         }
-    }
 
-    document.addEventListener('DOMContentLoaded', initBurgerMenu);
-    document.addEventListener('livewire:navigated', initBurgerMenu);
-</script>
+        document.addEventListener('DOMContentLoaded', initBurgerMenu);
+        document.addEventListener('livewire:navigated', initBurgerMenu);
+    </script>
 
 
 </body>

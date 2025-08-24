@@ -45,7 +45,11 @@
 </head>
 
 <body class="font-sans">
+    @if(Route::is('dashboard'))
+    @livewire('layout.navigation')
+    @else
     @livewire('front.nav')
+    @endif
     @yield('content')
     <footer class="bg-slate-900 text-white py-12 px-[5%]">
         <div class="mx-[5%]">
@@ -97,25 +101,25 @@
     @livewireScripts
     @stack('scripts')
     <script>
-    function initBurgerMenu() {
-        let burgerBtn = document.getElementById('burgerBtn');
-        let mobileMenu = document.getElementById('mobileMenu');
+        function initBurgerMenu() {
+            let burgerBtn = document.getElementById('burgerBtn');
+            let mobileMenu = document.getElementById('mobileMenu');
 
-        if (burgerBtn && mobileMenu) {
-            // تخلص من كل الأحداث القديمة عن طريق استبدال العنصر بنفسه (clone)
-            const newBtn = burgerBtn.cloneNode(true);
-            burgerBtn.parentNode.replaceChild(newBtn, burgerBtn);
-            burgerBtn = newBtn;
+            if (burgerBtn && mobileMenu) {
+                // تخلص من كل الأحداث القديمة عن طريق استبدال العنصر بنفسه (clone)
+                const newBtn = burgerBtn.cloneNode(true);
+                burgerBtn.parentNode.replaceChild(newBtn, burgerBtn);
+                burgerBtn = newBtn;
 
-            burgerBtn.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
-            });
+                burgerBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
         }
-    }
 
-    document.addEventListener('DOMContentLoaded', initBurgerMenu);
-    document.addEventListener('livewire:navigated', initBurgerMenu);
-</script>
+        document.addEventListener('DOMContentLoaded', initBurgerMenu);
+        document.addEventListener('livewire:navigated', initBurgerMenu);
+    </script>
 
 
 </body>

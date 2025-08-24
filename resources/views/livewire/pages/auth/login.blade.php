@@ -25,18 +25,18 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div class="flex align-center justify-center mt-[15vh] mb-[10vh] mx-auto p-6">
+<div class="flex align-center justify-center mx-auto p-6">
     <div class="max-w-md w-full" style="opacity: 1; transform: none;" bis_skin_checked="1">
         <div class="border border-slate-200 bg-white text-slate-900 shadow-2xl rounded-2xl" bis_skin_checked="1">
             <div class="flex flex-col space-y-1.5 text-center p-8" bis_skin_checked="1"><img src="https://lilium-night.com/wp-content/uploads/2024/07/logo-1-1.png" alt="شعار ليلة الليليوم" class="w-20 h-20 mx-auto mb-4">
                 <h3 class="tracking-tight text-3xl font-bold gradient-text">تسجيل الدخول</h3>
-                <p class="text-sm text-slate-500">مرحباً بعودتك! اختر نوع حسابك وسجل دخولك.</p>
+                <p class="text-sm text-slate-500">مرحباً بعودتك! أدخل البريد الالكتروني وكلمة المرور لتسجيل الدخول.</p>
             </div>
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
             <div class="p-8 pt-0" bis_skin_checked="1">
                 <div dir="ltr" data-orientation="horizontal" class="w-full" bis_skin_checked="1">
-                    <div role="tablist" aria-orientation="horizontal" class="h-auto items-center justify-center rounded-lg bg-slate-100 p-1 text-slate-500 grid w-full grid-cols-2" tabindex="0" data-orientation="horizontal" style="outline: none;" bis_skin_checked="1"><button type="button" role="tab" aria-selected="true" aria-controls="radix-:rt:-content-customer" data-state="active" id="radix-:rt:-trigger-customer" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm" tabindex="0" data-orientation="horizontal" data-radix-collection-item=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-2">
+                    <!-- <div role="tablist" aria-orientation="horizontal" class="h-auto items-center justify-center rounded-lg bg-slate-100 p-1 text-slate-500 grid w-full grid-cols-2" tabindex="0" data-orientation="horizontal" style="outline: none;" bis_skin_checked="1"><button type="button" role="tab" aria-selected="true" aria-controls="radix-:rt:-content-customer" data-state="active" id="radix-:rt:-trigger-customer" class="inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-sm" tabindex="0" data-orientation="horizontal" data-radix-collection-item=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-2">
                                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg> عميل</button>
@@ -46,8 +46,8 @@ new #[Layout('layouts.guest')] class extends Component
                                 <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"></path>
                                 <path d="M2 7h20"></path>
                                 <path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"></path>
-                            </svg> مزود خدمة</button></div>
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-:rt:-trigger-customer" id="radix-:rt:-content-customer" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-6" style="" bis_skin_checked="1">
+                            </svg> مزود خدمة</button></div> -->
+                    <div data-state="active" data-orientation="horizontal" role="tabpanel" aria-labelledby="radix-:rt:-trigger-customer" id="radix-:rt:-content-customer" tabindex="0" class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2" style="" bis_skin_checked="1">
                         <form wire:submit="login" class="space-y-4">
                             <div class="relative" bis_skin_checked="1"><label class="block text-sm font-medium text-gray-700 mb-2" for="customer-email">البريد الإلكتروني</label><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute top-9 right-3 h-5 w-5 text-slate-400">
                                     <rect width="20" height="16" x="2" y="4" rx="2"></rect>
@@ -97,7 +97,7 @@ new #[Layout('layouts.guest')] class extends Component
                         <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z"></path>
                         <circle cx="16.5" cy="7.5" r=".5"></circle>
                     </svg> هل نسيت كلمة المرور؟</button> -->
-                <p>ليس لديك حساب؟ <button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline p-0 h-auto">أنشئ حساب عميل</button> أو <button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline p-0 h-auto">سجل كمزود خدمة</button></p>
+                <p>ليس لديك حساب؟ <a href="{{ route('register') }}" wire:navigate class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary underline-offset-4 hover:underline p-0 h-auto">سجل الآن</a></p>
             </div>
         </div>
     </div>
