@@ -16,12 +16,13 @@
             <div>
                 <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider px-2 mb-2" x-text="categoryTitles[category]"></h3>
                 <template x-for="item in categoryItems" :key="item.page">
-                    <button @click="navigateTo(item.page)" 
+                    <a @click.prevent="navigateTo(item.page)" 
+                    href="#"
                             :class="currentPage === item.page ? 'bg-pink-100 text-pink-600 border-r-2 border-pink-500' : 'text-slate-700 hover:bg-pink-50 hover:text-pink-600'"
                             class="flex items-center w-full rounded-lg font-medium p-3 transition">
                         <i :class="item.icon" class="ml-2 text-lg text-pink-500"></i>
                         <span x-text="item.title"></span>
-                    </button>
+</a>
                 </template>
             </div>
         </template>
@@ -43,10 +44,42 @@
 
 </main>
 
-<script>
+<!-- <script>
 function sidebarData() {
     return {
         currentPage: 'overview',
+
+
+        navigateTo(page) {
+            this.currentPage = page;
+
+            const url = new URL(window.location);
+            
+            url.searchParams.set('tab', page);
+
+            window.history.pushState({}, '', url);
+        },
+
+        logout() {
+            if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+                alert('تم تسجيل الخروج بنجاح');
+            }
+        }
+    }
+}
+function getPageTitle(page) {
+    const allItems = Object.values(sidebarData().menuItems).flat();
+    const found = allItems.find(i => i.page === page);
+    return found ? found.title : 'لوحة التحكم';
+}
+</script> -->
+
+
+<script>
+function sidebarData() {
+    return {
+        currentPage: new URLSearchParams(window.location.search).get('tab') || 'overview',
+
 
         menuItems: {
             general: [
@@ -142,7 +175,17 @@ function sidebarData() {
 
         navigateTo(page) {
             this.currentPage = page;
-            window.location.hash = '#' + page;
+
+            const url = new URL(window.location);
+            url.searchParams.set('tab', page);
+            window.history.pushState({}, '', url);
+        },
+
+        syncPageWithUrl() {
+            const urlTab = new URLSearchParams(window.location.search).get('tab');
+            if (urlTab && urlTab !== this.currentPage) {
+                this.currentPage = urlTab;
+            }
         },
 
         logout() {
@@ -152,13 +195,13 @@ function sidebarData() {
         }
     }
 }
-// دالة لمحتوى الـ main content
-function getPageTitle(page) {
-    // بحث في جميع العناصر للعثور على العنوان
-    const allItems = Object.values(sidebarData().menuItems).flat();
-    const found = allItems.find(i => i.page === page);
-    return found ? found.title : 'لوحة التحكم';
-}
+
+window.addEventListener('popstate', () => {
+    const el = document.querySelector('[x-data="sidebarData()"]');
+    if(el && el.__x) {
+        el.__x.$data.syncPageWithUrl();
+    }
+});
 </script>
 
 </body>
