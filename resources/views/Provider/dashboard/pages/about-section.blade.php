@@ -22,7 +22,10 @@
     </div>
 </div>
 
-
+@php
+    $AboutUri = route("provider.Dashboard.Provider.about",$provider->id);
+    $AboutUriPost = route("provider.Dashboard.Provider.updateAbout",$provider->id);
+@endphp
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const storage = @json($storage);
@@ -35,7 +38,7 @@
 
         function loadabout() {
 
-            axios.get(route("provider.Dashboard.Provider.about"))
+            axios.get(@json($AboutUri))
                 .then(res => {
                     const about = res.data.about;
 
@@ -79,7 +82,7 @@
 
             console.log('Sending about text:', aboutText); 
 
-            axios.post(route("provider.Dashboard.Provider.updateAbout"), formData, {
+            axios.post(@json($AboutUriPost), formData, {
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
                             .getAttribute('content'),

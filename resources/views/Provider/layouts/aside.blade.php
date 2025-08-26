@@ -1,7 +1,7 @@
 
 
 <!-- Sidebar كمكون مستقل -->
-<aside x-data="sidebarData()" class="fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-40 flex flex-col border-l border-slate-200">
+<aside x-data="sidebarData()" class="fixed top-0 right-0 h-full w-72 bg-white shadow-xl z-40 flex flex-col border-l border-slate-200">
     <!-- Logo -->
     <div class="flex items-center justify-center p-4 border-b bg-white">
         <img alt="شعار ليلة الليليوم" 

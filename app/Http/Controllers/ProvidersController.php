@@ -11,19 +11,9 @@ class ProvidersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($provider)
+    public function index()
     {
-        if (!auth()->user()->providers()->exists()) {
-            return response()->json([
-                'redirect' => route('ProviderCommercial')
-            ]);
-        }
 
-        $Provider = auth()->user()->providers()->findOrFail($provider);
-        return response()->json([
-            'Provider' => $Provider,
-            'User' => auth()->user(),
-        ]);
     }
 
     /**
@@ -45,9 +35,19 @@ class ProvidersController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Providers $providers)
+    public function show($Providers)
     {
-        //
+        if (!auth()->user()->providers()->exists()) {
+            return response()->json([
+                'redirect' => route('ProviderCommercial')
+            ]);
+        }
+
+        $Provider = auth()->user()->providers()->findOrFail($Providers);
+        return response()->json([
+            'Provider' => $Provider,
+            'User' => auth()->user(),
+        ]);
     }
 
     /**
@@ -61,15 +61,17 @@ class ProvidersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,  $provider)
+    public function update(Request $request,$Providers)
     {
-        $providerModel = auth()->user()->providers()->findOrFail($provider);
+
+
+        $providerModel = auth()->user()->providers()->findOrFail($Providers);
     
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|string|max:255',
             'cr_number' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:providers,email,' . $provider,
+            'email' => 'required|email|max:255|unique:providers,email,' . $providerModel->id,
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:500',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

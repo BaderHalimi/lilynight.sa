@@ -118,10 +118,8 @@
 @php
     $storage = Storage::url('');
     $providerID = $provider->id;
-    
-    $linkRoute = route("provider.Dashboard.ProviderProfile.index",["provider"=>$providerID]);
-    $linkRouteSave = route("provider.Dashboard.ProviderProfile.update",["provider"=>$providerID]);
-    //dd($linkRoute);
+    $linkRoute = route("provider.Dashboard.ProviderProfile.show",$providerID);
+    $linkRouteSave = route("provider.Dashboard.ProviderProfile.update",$providerID);
 @endphp
 
 <script>
@@ -202,6 +200,7 @@
             saveButton.disabled = true;
 
             const formData = new FormData();
+            const linkFormsave = @json($linkRouteSave);
 
             const businessName = document.getElementById("businessName").value.trim();
             const businessType = document.getElementById("businessType").value.trim();
@@ -236,7 +235,7 @@
                 console.log(pair[0] + ': ' + pair[1]);
             }
 
-            axios.post(@json($linkRouteSave)), formData, {
+            axios.post(linkFormsave, formData, {
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
                             .getAttribute('content'),

@@ -27,7 +27,11 @@
         #sidebar {
             transition: transform 0.3s ease-in-out;
         }
+            [x-cloak] { display: none !important; }
+
     </style>
+
+
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -74,7 +78,6 @@
 
 
 
-        <!-- ✅ السايدبار -->
         <div
             x-show="openSidebar"
             x-transition:enter="transition-all transform ease-out duration-300"
@@ -84,7 +87,7 @@
             x-transition:leave-start="opacity-100 translate-x-0"
             x-transition:leave-end="opacity-0 translate-x-full"
             @click.outside.window="if(window.innerWidth < 768) openSidebar = false"
-            class="fixed inset-y-0 right-0 w-64 bg-white p-6 flex flex-col border-l border-slate-200 z-40 overflow-y-auto shadow-xl md:relative md:shadow-none md:block">
+            class="fixed inset-y-0 right-0 w-72 bg-white p-6 flex flex-col border-l border-slate-200 z-40 overflow-y-auto shadow-xl md:relative md:shadow-none md:block">
             <aside id="sidebar" class="w-full">
                 <!-- Logo -->
                 <div class="flex items-center gap-3 mb-10">
@@ -129,4 +132,80 @@
     @stack('scripts')
 </body>
 
+
+<script>
+    
+        function getCsrfToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        async function apiGet(url, params = {}) {
+            try {
+                const res = await axios.get(url, { params });
+                return res.data;
+            } catch (err) {
+                handleApiError(err);
+                throw err;
+            }
+        }
+
+        async function apiPost(url, data = {}) {
+            try {
+                const res = await axios.post(url, data, {
+                    headers: { 'X-CSRF-TOKEN': getCsrfToken() }
+                });
+                return res.data;
+            } catch (err) {
+                handleApiError(err);
+                throw err;
+            }
+        }
+
+        async function apiPut(url, data = {}) {
+            try {
+                const res = await axios.put(url, data, {
+                    headers: { 'X-CSRF-TOKEN': getCsrfToken() }
+                });
+                return res.data;
+            } catch (err) {
+                handleApiError(err);
+                throw err;
+            }
+        }
+
+        async function apiDelete(url, params = {}) {
+            try {
+                const res = await axios.delete(url, {
+                    headers: { 'X-CSRF-TOKEN': getCsrfToken() },
+                    data: params // Laravel يتوقع البيانات هنا مع delete
+                });
+                return res.data;
+            } catch (err) {
+                handleApiError(err);
+                throw err;
+            }
+        }
+
+        function handleApiError(error) {
+            console.error('API Error:', error);
+
+            if (error.response) {
+                if (error.response.status === 422) {
+                    const errors = error.response.data.errors;
+                    let msg = "Validation errors:\n";
+                    Object.keys(errors).forEach(key => {
+                        msg += `- ${errors[key][0]}\n`;
+                    });
+                    alert(msg);
+                } else {
+                    alert(error.response.data.message || 'Server error occurred');
+                }
+            } else if (error.request) {
+                alert("No response from server. Check your connection.");
+            } else {
+                alert("Unexpected error: " + error.message);
+            }
+        }
+    
+</script>
 </html>

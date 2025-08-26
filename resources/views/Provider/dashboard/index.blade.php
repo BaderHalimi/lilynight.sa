@@ -83,7 +83,16 @@ $provider = auth()->user()->providers()->first();
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.profile', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.profile', ['provider' => $provider, 'storage' => $storage])   </div>
+
+            <div x-show="currentTab === 'manage-services'" 
+                 x-transition:enter="transition ease-out duration-300 transform"
+                 x-transition:enter-start="opacity-0 translate-y-8"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-150 transform"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-8">
+                @include('Provider.dashboard.pages.service-managment', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة My Bookings -->
             <div x-show="currentTab === 'my-bookings'" 

@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Providers;
 
 use App\Http\Controllers\ProvidersController;
+use App\Http\Controllers\BranchesController;
+use App\Http\Controllers\ServicesController;
+use App\Models\Services;
 // use DragonCode\Contracts\Cashier\Http\Request;
 
 use Illuminate\Http\Request;
@@ -38,8 +41,15 @@ Route::middleware(['auth', 'verified'])
         // })->name('ProviderProfile');
 
 
-        Route::resource('Provider-profile/', ProvidersController::class)->names("ProviderProfile");
-        Route::get('Provider-about', function($id){
+        Route::resource('Provider-profile', ProvidersController::class)->names("ProviderProfile");
+        Route::resource('Provider-branches', BranchesController::class)->names("ProviderBranches");
+        Route::get('Provider-branches/{provider}', [BranchesController::class, 'index'])->name("indexGet");
+
+        Route::get('Provider-Services/{provider}', [ServicesController::class, 'GetServices'])->name("ServicesGet");
+        Route::resource('Provider-Services', ServicesController::class)->names("ProviderServices");
+
+
+        Route::get('Provider-about/{id}', function($id){
             $Provider = auth()->user()->providers()->findOrFail($id);
             $about = $Provider->description;
             return response()->json([
@@ -47,7 +57,7 @@ Route::middleware(['auth', 'verified'])
             ]);
         })->name("Provider.about");
 
-        Route::put('Provider-updateAbout', function(Request $request,$id){
+        Route::put('Provider-updateAbout/{id}', function(Request $request,$id){
 
             $Provider = auth()->user()->providers()->findOrFail($id);
 
