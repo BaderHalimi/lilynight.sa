@@ -3,10 +3,10 @@
 </head>
 
 
-<div class="flex-1 p-4 sm:p-6 lg:p-8" x-data="{ activeTab: 'venues', activeModal: 'service', open: false }">
-    <div x-cloak class="relative">
+<div class="flex-1 p-4 sm:p-6 lg:p-8" x-data="{ activeTab: 'venues', activeModal: 'service', openModalServices: false }">
+    <div x-cloak class="relative" id="serviceModal">
 
-        <div x-show="open" x-data="{
+        <div x-show="openModalServices" x-data="{
             options: [],
             addons: [],
             addOption() { this.options.push('') },
@@ -14,18 +14,19 @@
             addAddon() { this.addons.push({ name: '', price: '' }) },
             removeAddon(i) { this.addons.splice(i, 1) },
             onDemandGlobal: false
-        }" class="fixed inset-0 flex items-center justify-center bg-black/50 z-50"
-            x-transition>
+        }"
+            class="fixed inset-0 flex items-center justify-center bg-black/50 z-50" x-transition>
 
             <div class="bg-white rounded-2xl shadow-xl w-full max-w-5xl p-6 relative overflow-y-auto max-h-[90vh]"
-                @click.away="open=false">
+                @click.away="openModalServices=false">
 
                 <!-- رأس -->
                 <div class="flex justify-between items-center border-b pb-3 mb-4">
                     <h2 class="text-lg font-semibold text-slate-700 flex items-center gap-2">
                         <i class="ri-tools-line text-pink-500"></i> إنشاء خدمة جديدة
                     </h2>
-                    <button @click="open=false" class="text-slate-500 hover:text-slate-700 text-xl">&times;</button>
+                    <button @click="openModalServices=false"
+                        class="text-slate-500 hover:text-slate-700 text-xl">&times;</button>
                 </div>
 
                 <!-- التابات -->
@@ -109,7 +110,7 @@
                         </div>
                         <template x-for="(option,i) in options" :key="i">
                             <div class="flex items-center gap-2 mb-2">
-                                <input :id="`option_${i}`" type="text" placeholder="اكتب خيار"
+                                <input :id="`optionServices_${i}`" type="text" placeholder="اكتب خيار"
                                     class="flex-1 border rounded-lg px-3 py-2">
                                 <button @click="removeOption(i)" class="text-red-500 hover:text-red-700">
                                     <i class="ri-close-line text-xl"></i>
@@ -129,9 +130,9 @@
                         </div>
                         <template x-for="(addon,i) in addons" :key="i">
                             <div class="flex items-center gap-2 mb-2">
-                                <input :id="`addon_name_${i}`" type="text" placeholder="اسم الإضافة"
+                                <input :id="`addon_nameServices_${i}`" type="text" placeholder="اسم الإضافة"
                                     class="flex-1 border rounded-lg px-3 py-2">
-                                <input :id="`addon_price_${i}`" type="number" placeholder="السعر"
+                                <input :id="`addon_priceServices_${i}`" type="number" placeholder="السعر"
                                     class="w-32 border rounded-lg px-3 py-2">
                                 <button @click="removeAddon(i)" class="text-red-500 hover:text-red-700">
                                     <i class="ri-close-line text-xl"></i>
@@ -152,7 +153,7 @@
 
                         <!-- جدول الأيام -->
                         <div x-show="!onDemandGlobal" class="overflow-x-auto">
-                            <table class="w-full border text-sm text-slate-700">
+                            <table id="servisesTable" class="w-full border text-sm text-slate-700">
                                 <thead class="bg-slate-100 text-slate-600">
                                     <tr>
                                         <th class="px-3 py-2 text-right">اليوم</th>
@@ -163,20 +164,21 @@
                                 </thead>
                                 <tbody>
                                     <template
-                                        x-for="(day,idx) in ['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة']"
-                                        :key="day">
+                                        x-for="(Serviceday,idx) in ['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة']"
+                                        :key="Serviceday">
                                         <tr class="border-t">
-                                            <td class="px-3 py-2 font-medium" x-text="day"></td>
+                                            <td class="px-3 py-2 font-medium" x-text="Serviceday"></td>
                                             <td class="px-3 py-2 text-center">
-                                                <input :id="`day_${idx}_from`" type="time"
+                                                <input :id="`Serviceday_${idx}_from`" type="time"
                                                     class="border rounded-lg px-2 py-1">
                                             </td>
                                             <td class="px-3 py-2 text-center">
-                                                <input :id="`day_${idx}_to`" type="time"
+                                                <input :id="`Serviceday_${idx}_to`" type="time"
                                                     class="border rounded-lg px-2 py-1">
                                             </td>
                                             <td class="px-3 py-2 text-center">
-                                                <input :id="`day_${idx}_active`" type="checkbox" class="rounded">
+                                                <input :id="`Serviceday_${idx}_active`" type="checkbox"
+                                                    class="rounded">
                                             </td>
                                         </tr>
                                     </template>
@@ -189,7 +191,7 @@
 
                 <!-- أزرار -->
                 <div class="flex justify-between mt-6 border-t pt-3">
-                    <button @click="open=false"
+                    <button @click="openModalServices=false"
                         class="px-4 py-2 bg-slate-200 rounded-lg hover:bg-slate-300">إلغاء</button>
                     <button id="saveService"
                         class="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">حفظ</button>
@@ -204,7 +206,7 @@
     <div class="space-y-8">
         <div class="flex justify-between items-center flex-wrap gap-4">
             <h1 class="text-3xl font-bold text-slate-800">إدارة الخدمات والباقات</h1>
-            <button @click="open = true"
+            <button @click="openModalServices = true"
                 class="inline-flex items-center justify-center rounded-lg text-sm font-semibold bg-primary hover:bg-primary/90 shadow-md h-10 px-4 py-2 text-white">
                 <i class="ri-add-circle-line text-lg ml-2"></i>
                 إضافة باقة أو خدمة جديدة
@@ -1340,14 +1342,14 @@
 
 
             <div class="mt-6">
-              <div class="relative w-full mb-4">
-                <input type="text" id="serviceSearch" autocomplete="off" placeholder="ابحث عن خدمة..."
-                    class="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
-                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <i class="ri-search-line text-lg"></i>
-                </span>
-            </div>
-            
+                <div class="relative w-full mb-4">
+                    <input type="text" id="serviceSearch" autocomplete="off" placeholder="ابحث عن خدمة..."
+                        class="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <i class="ri-search-line text-lg"></i>
+                    </span>
+                </div>
+
                 <div id="servicesContainer"></div>
             </div>
 
@@ -1359,6 +1361,8 @@
 @php
     $RouteAddService = route('provider.Dashboard.ProviderServices.store');
     $RouteGetServices = route('provider.Dashboard.ServicesGet', $provider->id);
+    $RouteUpdateService = route('provider.Dashboard.ProviderServices.update', ':id');
+    $RouteDeleteService = route('provider.Dashboard.ProviderServices.destroy', ':id');
 
 @endphp
 <style>
@@ -1390,89 +1394,278 @@
     }
 </style>
 
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        loadServices();
+        // ---- Helpers ----
+        function runWhenAlpineReady(el, cb, timeout = 2000) {
+            // wait until el.__x exists (Alpine initialized), then call cb
+            const start = Date.now();
+            (function check() {
+                if (el && el.__x) return cb(el.__x);
+                if (Date.now() - start > timeout) return cb(null);
+                setTimeout(check, 50);
+            })();
+        }
 
+        function safeQuery(selector) {
+            try {
+                return document.querySelector(selector);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // ---- State ----
+        let editingServiceId = null;
+
+        // ---- collectFormData (as you defined) ----
         function collectFormData() {
             const formData = new FormData();
 
-            formData.append("service_name", document.getElementById("service_name").value);
-            formData.append("service_category", document.getElementById("service_category").value);
-            formData.append("service_description", document.getElementById("service_description").value);
-            formData.append("service_price", document.getElementById("service_price").value);
-            formData.append("service_currency", document.getElementById("service_currency").value);
-            formData.append("service_features", document.getElementById("service_features").value);
+            const getVal = id => (document.getElementById(id) ? document.getElementById(id).value : '');
+
+            formData.append("service_name", getVal("service_name"));
+            formData.append("service_category", getVal("service_category"));
+            formData.append("service_description", getVal("service_description"));
+            formData.append("service_price", getVal("service_price"));
+            formData.append("service_currency", getVal("service_currency"));
+            formData.append("service_features", getVal("service_features"));
 
             formData.append("provider_id", @json($provider->id));
-            let mainImage = document.getElementById("service_main_image").files[0];
-            if (mainImage) {
-                formData.append("service_main_image", mainImage);
+
+            const mainImageInput = document.getElementById("service_main_image");
+            if (mainImageInput && mainImageInput.files && mainImageInput.files[0]) {
+                formData.append("service_main_image", mainImageInput.files[0]);
             }
 
-
-            let gallery = document.getElementById("service_gallery").files;
-            for (let i = 0; i < gallery.length; i++) {
-                formData.append("service_gallery[]", gallery[i]);
+            const galleryInput = document.getElementById("service_gallery");
+            if (galleryInput && galleryInput.files) {
+                for (let i = 0; i < galleryInput.files.length; i++) {
+                    formData.append("service_gallery[]", galleryInput.files[i]);
+                }
             }
 
-            document.querySelectorAll("[id^='option_']").forEach((el, i) => {
+            // options & addons by id patterns
+            document.querySelectorAll("[id^='optionServices_']").forEach((el, i) => {
                 formData.append(`options[${i}]`, el.value);
             });
 
-            document.querySelectorAll("[id^='addon_name_']").forEach((el, i) => {
+            document.querySelectorAll("[id^='addon_nameServices_']").forEach((el, i) => {
                 formData.append(`addons[${i}][name]`, el.value);
             });
-            document.querySelectorAll("[id^='addon_price_']").forEach((el, i) => {
+            document.querySelectorAll("[id^='addon_priceServices_']").forEach((el, i) => {
                 formData.append(`addons[${i}][price]`, el.value);
             });
 
-            formData.append("on_demand", document.getElementById("on_demand").checked ? 1 : 0);
+            formData.append("on_demand", (document.getElementById("on_demand") && document.getElementById(
+                "on_demand").checked) ? 1 : 0);
 
-            let days = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
-            days.forEach((day, idx) => {
-                formData.append(`days[${idx}][name]`, day);
-                formData.append(`days[${idx}][from]`, document.getElementById(`day_${idx}_from`).value);
-                formData.append(`days[${idx}][to]`, document.getElementById(`day_${idx}_to`).value);
-                formData.append(`days[${idx}][active]`, document.getElementById(`day_${idx}_active`)
-                    .checked ? 1 : 0);
+            let Servicedays = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
+            Servicedays.forEach((Serviceday, idx) => {
+                formData.append(`Servicedays[${idx}][name]`, Serviceday);
+                const fromEl = document.getElementById(`Serviceday_${idx}_from`);
+                const toEl = document.getElementById(`Serviceday_${idx}_to`);
+                const activeEl = document.getElementById(`Serviceday_${idx}_active`);
+                formData.append(`Servicedays[${idx}][from]`, fromEl ? fromEl.value : '');
+                formData.append(`Servicedays[${idx}][to]`, toEl ? toEl.value : '');
+                formData.append(`Servicedays[${idx}][active]`, (activeEl && activeEl.checked) ? 1 : 0);
             });
 
             return formData;
         }
 
-        document.getElementById("saveService").addEventListener("click", async (e) => {
-            e.preventDefault();
-            const button = document.getElementById("saveService");
-            button.disabled = true;
-            button.innerHTML = 'جاري الحفظ... <span class="loader ml-2"></span>';
-            let fd = collectFormData();
-            for (let pair of fd.entries()) {
-                console.log(pair[0], pair[1]);
-            }
+        // ---- resetForm ----
+        function resetForm() {
+            const modalEl = document.getElementById("serviceModal");
+            if (!modalEl) return;
 
-            let Service = await apiPost(@json($RouteAddService), fd);
+            // basic fields
+            const setIf = (id, val) => {
+                const el = modalEl.querySelector(`#${id}`);
+                if (el) el.value = val;
+            };
+            setIf("service_name", "");
+            setIf("service_category", "اختيار تصنيف");
+            setIf("service_description", "");
+            setIf("service_price", "");
+            setIf("service_currency", "دولار");
+            setIf("service_features", "");
+            if (modalEl.querySelector("#service_main_image")) modalEl.querySelector("#service_main_image")
+                .value = "";
+            if (modalEl.querySelector("#service_gallery")) modalEl.querySelector("#service_gallery").value = "";
 
-            console.log(Service);
+            const onDemand = modalEl.querySelector("#on_demand");
+            if (onDemand) onDemand.checked = false;
 
-            if (Service.success) {
-                alert(Service.message);
-                button.disabled = false;
-            } else {
-                alert("فشل الحفظ");
-                button.disabled = false;
-            }
+            // reset options/addons via Alpine safely
+            runWhenAlpineReady(modalEl, function(alpine) {
+                if (!alpine) return;
+                // Assuming the x-data component has options & addons
+                Alpine.evaluate(modalEl, 'options = []');
+                Alpine.evaluate(modalEl, 'addons = []');
+            });
 
+            // reset servicedays
+            const Servicedays = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
+            Servicedays.forEach((day, idx) => {
+                const from = modalEl.querySelector(`#Serviceday_${idx}_from`);
+                const to = modalEl.querySelector(`#Serviceday_${idx}_to`);
+                const active = modalEl.querySelector(`#Serviceday_${idx}_active`);
+                if (from) from.value = "";
+                if (to) to.value = "";
+                if (active) active.checked = false;
+            });
 
+            // gallery info remove or reset
+            const galleryInfo = modalEl.querySelector("#gallery_info");
+            if (galleryInfo) galleryInfo.textContent = "";
 
+            editingServiceId = null;
+            const saveBtn = modalEl.querySelector("#saveService");
+            if (saveBtn) saveBtn.textContent = "حفظ الخدمة";
+            const modalTitle = modalEl.querySelector("h2");
+            if (modalTitle) modalTitle.innerHTML =
+                '<i class="ri-tools-line text-pink-500"></i> إنشاء خدمة جديدة';
+        }
+
+        // ---- populateFormData (global) ----
+        window.populateFormData = function(service) {
+            // wrapper so older code that calls populateFormData(...) keeps working
+            populateFormDataForEditing(service);
+        };
+
+        // ---- populateFormDataForEditing ----
+
+function populateFormDataForEditing(serviceData) {
+    // تحويل features من JSON لو كانت string
+    const features = typeof serviceData.features === 'string' ? JSON.parse(serviceData.features) : serviceData.features;
+
+    // -------------------
+    // الحقول الأساسية
+    // -------------------
+    document.getElementById("service_name").value = serviceData.name || '';
+    document.getElementById("service_category").value = serviceData.type || '';
+    document.getElementById("service_description").value = serviceData.description || '';
+    document.getElementById("service_price").value = serviceData.price || '';
+    document.getElementById("service_features").value = features?.features || '';
+
+    // -------------------
+    // Alpine.js state
+    // -------------------
+    const alpineEl = document.querySelector('[x-data]');
+    if (alpineEl && alpineEl.__x) {
+        // خيارات: نضيف القيم بدون مسح القديم
+        if (features?.options && features.options.length) {
+            features.options.forEach(opt => {
+                if (!alpineEl.__x.$data.options.includes(opt)) {
+                    alpineEl.__x.$data.options.push(opt);
+                }
+            });
+        }
+
+        // اضافات: نضيف القيم بدون تكرار
+        if (features?.addons && features.addons.length) {
+            features.addons.forEach(addon => {
+                const exists = alpineEl.__x.$data.addons.some(a => a.name === addon.name && a.price == addon.price);
+                if (!exists) alpineEl.__x.$data.addons.push(addon);
+            });
+        }
+
+        // حسب الطلب
+        alpineEl.__x.$data.onDemandGlobal = features?.on_demand == "1" || features?.on_demand === true;
+    }
+
+    // -------------------
+    // الأيام والأوقات
+    // -------------------
+    const days = features?.days || [];
+    days.forEach((day, idx) => {
+        const fromEl = document.getElementById(`Serviceday_${idx}_from`);
+        const toEl = document.getElementById(`Serviceday_${idx}_to`);
+        const activeEl = document.getElementById(`Serviceday_${idx}_active`);
+        if (fromEl) fromEl.value = day.from || '';
+        if (toEl) toEl.value = day.to || '';
+        if (activeEl) activeEl.checked = day.active == "1" ? true : false;
+    });
+
+    // -------------------
+    // عرض معرض الصور القديمة
+    // -------------------
+    const galleryContainerId = 'existingGalleryFiles';
+    let galleryContainer = document.getElementById(galleryContainerId);
+    if (!galleryContainer) {
+        const inputGallery = document.getElementById('service_gallery');
+        galleryContainer = document.createElement('div');
+        galleryContainer.id = galleryContainerId;
+        galleryContainer.classList.add('mt-2', 'text-sm', 'text-slate-600');
+        inputGallery.parentNode.insertBefore(galleryContainer, inputGallery.nextSibling);
+    }
+
+    galleryContainer.innerHTML = '';
+    if (features?.gallery && features.gallery.length) {
+        const list = document.createElement('ul');
+        features.gallery.forEach(file => {
+            const li = document.createElement('li');
+            li.textContent = file.split('/').pop(); // يظهر اسم الملف فقط
+            list.appendChild(li);
         });
+        galleryContainer.appendChild(list);
+    }
+}
 
 
+        // ---- save/update handler ----
+        const saveBtn = document.getElementById("saveService");
+        if (saveBtn) {
+            saveBtn.addEventListener("click", async function(e) {
+                e.preventDefault();
+                const btn = this;
+                btn.disabled = true;
+                btn.innerHTML = editingServiceId ?
+                    'جاري التحديث... <span class="loader ml-2"></span>' :
+                    'جاري الحفظ... <span class="loader ml-2"></span>';
+
+                const fd = collectFormData();
+                try {
+                    let res;
+                    if (editingServiceId) {
+                        const updateUrl = @json($RouteUpdateService).replace(':id',
+                            editingServiceId);
+                        fd.append('_method', 'PUT');
+                        res = await apiPost(updateUrl, fd);
+                    } else {
+                        res = await apiPost(@json($RouteAddService), fd);
+                    }
+
+                    if (res && res.success) {
+                        alert(res.message || (editingServiceId ? 'تم التحديث' : 'تم الحفظ'));
+                        resetForm();
+                        loadServices();
+                        // close modal
+                        const modalEl = document.getElementById("serviceModal");
+                        if (modalEl) Alpine.evaluate(modalEl, 'openModalServices = false');
+                    } else {
+                        alert(res.message || (editingServiceId ? 'فشل التحديث' : 'فشل الحفظ'));
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("حدث خطأ، حاول مرة أخرى");
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = editingServiceId ? "تحديث الخدمة" : "حفظ الخدمة";
+                    editingServiceId = null;
+                }
+            });
+        }
+
+        // ---- loadServices & render ----
         async function loadServices() {
             try {
                 const response = await apiGet(@json($RouteGetServices));
                 const services = response || [];
                 const container = document.getElementById("servicesContainer");
+                if (!container) return;
 
                 function renderTable(filteredServices) {
                     container.innerHTML = "";
@@ -1480,20 +1673,21 @@
                         container.innerHTML = "<p class='text-center py-4'>لا توجد خدمات</p>";
                         return;
                     }
+
                     const table = document.createElement("table");
                     table.className = "min-w-full border border-gray-300";
 
                     const thead = document.createElement("thead");
                     thead.innerHTML = `
-                <tr class="bg-gray-100">
-                    <th class="border px-4 py-2">#</th>
-                    <th class="border px-4 py-2">الاسم</th>
-                    <th class="border px-4 py-2">السعر</th>
-                    <th class="border px-4 py-2">النوع</th>
-                    <th class="border px-4 py-2">تاريخ الإنشاء</th>
-                    <th class="border px-4 py-2">أكشن</th>
-                </tr>
-            `;
+                        <tr class="bg-gray-100">
+                            <th class="border px-4 py-2">#</th>
+                            <th class="border px-4 py-2">الاسم</th>
+                            <th class="border px-4 py-2">السعر</th>
+                            <th class="border px-4 py-2">النوع</th>
+                            <th class="border px-4 py-2">تاريخ الإنشاء</th>
+                            <th class="border px-4 py-2">أكشن</th>
+                        </tr>
+                    `;
                     table.appendChild(thead);
 
                     const tbody = document.createElement("tbody");
@@ -1501,17 +1695,19 @@
                     filteredServices.forEach((service, index) => {
                         const tr = document.createElement("tr");
                         tr.className = "hover:bg-gray-50";
+                        // ensure we escape JSON for attribute safely
+                        const serviceJson = JSON.stringify(service).replace(/"/g, '&quot;');
                         tr.innerHTML = `
-                    <td class="border px-4 py-2">${index + 1}</td>
-                    <td class="border px-4 py-2">${service.name}</td>
-                    <td class="border px-4 py-2">${service.price} ${service.price_unit || ''}</td>
-                    <td class="border px-4 py-2">${service.type || '-'}</td>
-                    <td class="border px-4 py-2">${new Date(service.created_at).toLocaleString()}</td>
-                    <td class="border px-4 py-2 flex gap-2 justify-center">
-                        <i class="ri-pencil-line text-blue-500 text-lg cursor-pointer hover:text-blue-700"></i>
-                        <i class="ri-delete-bin-line text-red-500 text-lg cursor-pointer hover:text-red-700 delete-service" data-id="${service.id}"></i>
-                    </td>
-                `;
+                            <td class="border px-4 py-2">${index + 1}</td>
+                            <td class="border px-4 py-2">${service.name}</td>
+                            <td class="border px-4 py-2">${service.price} ${service.price_unit || ''}</td>
+                            <td class="border px-4 py-2">${service.type || '-'}</td>
+                            <td class="border px-4 py-2">${new Date(service.created_at).toLocaleString()}</td>
+                            <td class="border px-4 py-2 flex gap-2 justify-center">
+                                <i class="ri-pencil-line text-blue-500 text-lg cursor-pointer hover:text-blue-700 edit-service" data-service="${serviceJson}"></i>
+                                <i class="ri-delete-bin-line text-red-500 text-lg cursor-pointer hover:text-red-700 delete-service" data-id="${service.id}"></i>
+                            </td>
+                        `;
                         tbody.appendChild(tr);
                     });
 
@@ -1521,37 +1717,69 @@
 
                 renderTable(services);
 
-                // البحث
+                // search
                 const searchInput = document.getElementById("serviceSearch");
-                searchInput.addEventListener("input", function() {
+                if (searchInput) {
+                    searchInput.value = "";
+                    searchInput.removeEventListener('input', onSearchInput, false);
+                    searchInput.addEventListener('input', onSearchInput);
+                }
+
+                function onSearchInput() {
                     const term = this.value.toLowerCase();
                     const filtered = services.filter(s =>
-                        s.name.toLowerCase().includes(term) ||
-                        (s.type || '').toLowerCase().includes(term) ||
-                        s.price.toString().includes(term)
+                        (s.name || '').toLowerCase().includes(term) ||
+                        ((s.type || '')).toLowerCase().includes(term) ||
+                        (s.price && s.price.toString().includes(term))
                     );
                     renderTable(filtered);
-                });
+                }
 
             } catch (err) {
                 console.error(err);
             }
         }
 
-        // Delegation للحذف حتى لو الجدول يعاد رسمه
-        document.getElementById("servicesContainer").addEventListener("click", function(e) {
-            const deleteBtn = e.target.closest(".delete-service");
-            if (deleteBtn) {
-                const serviceId = deleteBtn.dataset.id;
-                if (confirm("هل تريد حذف هذه الخدمة؟")) {
-                    deleteService(serviceId);
+        // ---- delegation: edit / delete ----
+        const servicesContainer = document.getElementById("servicesContainer");
+        if (servicesContainer) {
+            servicesContainer.addEventListener("click", function(e) {
+                const editBtn = e.target.closest(".edit-service");
+                const deleteBtn = e.target.closest(".delete-service");
+
+                if (editBtn) {
+                    // parse service payload
+                    const serviceData = editBtn.getAttribute('data-service');
+                    let serviceObj = {};
+                    try {
+                        serviceObj = JSON.parse(serviceData);
+                    } catch (err) {
+                        console.error(err);
+                    }
+
+                    resetForm();
+                    populateFormDataForEditing(serviceObj);
+
+                    // open modal (handled in populate but safe)
+                    const modalEl = document.getElementById("serviceModal");
+                    if (modalEl) runWhenAlpineReady(modalEl, () => {
+                        Alpine.evaluate(modalEl, 'openModalServices = true');
+                        Alpine.evaluate(modalEl, 'activeModal = "service"');
+                    });
                 }
-            }
-        });
+
+                if (deleteBtn) {
+                    const id = deleteBtn.dataset.id;
+                    if (id && confirm("هل تريد حذف هذه الخدمة؟")) {
+                        deleteService(id);
+                    }
+                }
+            });
+        }
 
         async function deleteService(serviceId) {
             try {
-                const url = routeDeleteService.replace(':id', serviceId);
+                const url = @json($RouteDeleteService).replace(':id', serviceId);
                 await apiDelete(url);
                 alert("تم الحذف بنجاح");
                 loadServices();
@@ -1561,35 +1789,29 @@
             }
         }
 
+        // ---- open button: reset form before open ----
+        (function bindOpenButtons() {
+            // common patterns: button with @click="openModalServices = true" OR specific id/class
+            const openBtns = document.querySelectorAll(
+                '[x-on\\:click="openModalServices = true"], button[data-open-service-modal]');
+            openBtns.forEach(btn => {
+                btn.addEventListener('click', () => resetForm());
+            });
+        })();
 
-
-
-        async function deleteService(serviceId) {
-            await apiDelete(route("provider.Dashboard.ProviderServices.destroy", serviceId));
-            loadServices();
-            alert("تم الحذف بنجاح");
-            //alert("تم الحذف بنجاح");
-        }
-
-        //const linkServices = new URLSearchParams(window.location.search).get('tab');
-        window.addEventListener('locationchange', () => {
-            if (new URLSearchParams(window.location.search).get('tab') === "manage-services") {
-                loadServices();
+        // ---- close behavior: reset when user explicitly closes modal via buttons with openModalServices=false ----
+        document.addEventListener('click', function(e) {
+            if (e.target.matches(
+                    '[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]'
+                    ) ||
+                e.target.closest(
+                    '[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]'
+                    )) {
+                resetForm();
             }
         });
 
-        const searchInput = document.getElementById("serviceSearch");
-        searchInput.value = "";
-        searchInput.addEventListener("input", function() {
-            const term = this.value.toLowerCase();
-            const filtered = services.filter(s =>
-                s.name.toLowerCase().includes(term) ||
-                (s.type || '').toLowerCase().includes(term) ||
-                s.price.toString().includes(term)
-            );
-            renderTable(filtered);
-        });
-
-
+        // finally load initial services
+        loadServices();
     });
 </script>

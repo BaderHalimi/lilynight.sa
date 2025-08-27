@@ -14,6 +14,7 @@ class ContractsController extends Controller
     {
         //
     }
+
     public function GetContracts($Provider_id)
     {
         $contracts = Contracts::where("Provider_id",$Provider_id)->get();
@@ -69,7 +70,7 @@ class ContractsController extends Controller
     public function edit($contract_id)
     {
         $contract = Contracts::findOrFail($contract_id);
-        return response()->json($contract)
+        return response()->json($contract);
         
     }
 

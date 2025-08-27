@@ -1,1 +1,121 @@
-<div class="flex-1 p-4 sm:p-6 lg:p-8"><div style="opacity: 1; transform: none;"><div class="space-y-8"><h2 class="text-3xl font-bold text-slate-800">مركز رسائل العملاء</h2><div class="rounded-xl border border-slate-200 bg-white text-slate-900 shadow-sm h-[calc(100vh-12rem)] flex"><div class="w-1/3 border-l p-4 flex flex-col"><div class="relative mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg><input class="flex h-10 w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-all duration-200 ease-in-out pl-10" placeholder="بحث في المحادثات..." value=""></div><div class="flex-grow overflow-y-auto space-y-2"><div class="p-3 rounded-lg cursor-pointer flex items-start gap-3 bg-primary/10"><span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><img class="aspect-square h-full w-full" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&amp;w=200"></span><div class="flex-grow"><div class="flex justify-between items-center"><p class="font-semibold text-sm">فهد صالح (حجز #BK-8462)</p><p class="text-xs text-slate-400">10:30ص</p></div><div class="flex justify-between items-center mt-1"><p class="text-xs text-slate-500 truncate">مرحباً، هل يمكن تغيير موعد حجز قاعة الأفراح؟</p><div class="w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">2</div></div></div></div><div class="p-3 rounded-lg cursor-pointer flex items-start gap-3 hover:bg-slate-50"><span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><img class="aspect-square h-full w-full" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&amp;w=200"></span><div class="flex-grow"><div class="flex justify-between items-center"><p class="font-semibold text-sm">مجموعة شركات النمو (حجز #GRP-001)</p><p class="text-xs text-slate-400">9:15ص</p></div><div class="flex justify-between items-center mt-1"><p class="text-xs text-slate-500 truncate">شكرًا على الخدمة الممتازة في تنظيم مناسبتنا!</p></div></div></div><div class="p-3 rounded-lg cursor-pointer flex items-start gap-3 hover:bg-slate-50"><span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><img class="aspect-square h-full w-full" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&amp;w=200"></span><div class="flex-grow"><div class="flex justify-between items-center"><p class="font-semibold text-sm">سارة علي (حجز #BK-5987)</p><p class="text-xs text-slate-400">أمس</p></div><div class="flex justify-between items-center mt-1"><p class="text-xs text-slate-500 truncate">لدي استفسار بخصوص فاتورة خدمة المكياج.</p></div></div></div></div></div><div class="w-2/3 flex flex-col"><div class="p-4 border-b flex items-center gap-3"><span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full"><img class="aspect-square h-full w-full" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&amp;w=200"></span><div><p class="font-bold">فهد صالح (حجز #BK-8462)</p><p class="text-xs text-green-500">متصل الآن</p></div></div><div class="flex-grow p-6 overflow-y-auto bg-slate-50 space-y-6"><div class="flex justify-start"><div class="max-w-xs lg:max-w-md p-3 rounded-2xl bg-white rounded-bl-none shadow-sm"><p>مرحباً، هل يمكن تغيير موعد حجز قاعة الأفراح؟ لدي ظرف طارئ.</p><p class="text-xs mt-1 text-slate-400">10:30ص</p></div></div><div class="flex justify-end"><div class="max-w-xs lg:max-w-md p-3 rounded-2xl bg-primary text-white rounded-br-none"><p>أهلاً بك أستاذ فهد، يؤسفني سماع ذلك. بالتأكيد، يمكننا محاولة تغيير الموعد. ما هو الموعد الجديد الذي ترغب به؟ وهل لديك رقم الحجز؟</p><p class="text-xs mt-1 text-white/70">10:31ص</p></div></div></div><div class="p-4 border-t bg-white flex items-center gap-2"><input class="flex h-10 w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-all duration-200 ease-in-out flex-grow" placeholder="اكتب رسالتك هنا..." value=""><button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg></button><button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary hover:bg-primary/90 shadow-md h-10 px-4 py-2 gradient-bg text-white"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg></button></div></div></div></div></div></div>
+@php
+    $providerID = $provider->id;
+    $routes = [
+        "getChats" => route('provider.Dashboard.ProviderGetChat', $providerID),
+        "getMessages" => route('provider.Dashboard.ProviderGetChatMessage', ':chat_id'),
+        "sendMessage" => route('provider.Dashboard.ProviderChat.store'),
+    ];
+    //dd($routes);
+@endphp
+
+<div class="h-screen flex overflow-hidden bg-gray-50"
+     x-data="chatApp({{ Js::from($routes) }})">
+
+    <!-- القائمة الجانبية -->
+    <div class="hidden md:flex md:w-1/3 lg:w-1/4 border-l bg-white flex-col">
+        <div class="p-4 border-b">
+            <input type="text" placeholder="بحث..."
+                class="w-full h-10 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-primary focus:outline-none">
+        </div>
+
+        <div class="flex-1 p-2 space-y-2 overflow-y-auto">
+            <template x-for="chat in chats" :key="chat.id">
+                <div class="p-3 rounded-lg cursor-pointer flex items-center gap-3 hover:bg-slate-100"
+                     @click="selectChat(chat)">
+                    <div class="h-10 w-10 rounded-full bg-slate-200"></div>
+                    <div class="flex-1">
+                        <p class="font-semibold text-sm truncate" x-text="chat.client_name"></p>
+                        <p class="text-xs text-slate-500 truncate" x-text="chat.last_message"></p>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- منطقة المحادثة -->
+    <div class="flex-1 flex flex-col">
+        <!-- الهيدر -->
+        <div class="p-4 border-b flex items-center gap-3 bg-white shrink-0">
+            <div class="h-10 w-10 rounded-full bg-slate-200"></div>
+            <div>
+                <p class="font-bold" x-text="activeChat?.client_name || 'اختر محادثة'"></p>
+                <p class="text-xs text-green-500" x-show="activeChat">متصل الآن</p>
+            </div>
+        </div>
+
+        <!-- الرسائل -->
+        <div class="flex-1 p-6 space-y-6 bg-slate-50 flex flex-col justify-end overflow-y-auto">
+            <template x-for="msg in messages" :key="msg.id">
+                <div :class="msg.sender === 'provider' ? 'flex justify-end' : 'flex justify-start'">
+                    <div :class="msg.sender === 'provider'
+                                ? 'max-w-xs lg:max-w-md p-3 rounded-2xl bg-primary text-white rounded-br-none'
+                                : 'max-w-xs lg:max-w-md p-3 rounded-2xl bg-white rounded-bl-none shadow-sm'">
+                        <p x-text="msg.content"></p>
+                        <p class="text-xs mt-1"
+                           :class="msg.sender === 'provider' ? 'text-white/70' : 'text-slate-400'"
+                           x-text="msg.time"></p>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- حقل الإدخال -->
+        <div class="p-4 border-t bg-white flex items-center gap-2 shrink-0" x-show="activeChat">
+            <input type="text" placeholder="اكتب رسالتك..."
+                x-model="newMessage"
+                @keydown.enter="sendMessage"
+                class="flex-1 h-10 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-primary focus:outline-none">
+            <button @click="sendMessage"
+                class="h-10 px-4 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90">
+                إرسال
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function chatApp(routes) {
+    return {
+        routes,
+        chats: [],
+        messages: [],
+        activeChat: null,
+        newMessage: "",
+
+        async init() {
+            try {
+                let res = await axios.get(this.routes.getChats);
+                this.chats = res.data;
+            } catch (e) {
+                console.error("خطأ في تحميل المحادثات", e);
+            }
+        },
+
+        async selectChat(chat) {
+            this.activeChat = chat;
+            this.messages = [];
+            try {
+                let url = this.routes.getMessages.replace(":chat_id", chat.id);
+                let res = await axios.get(url);
+                this.messages = res.data;
+            } catch (e) {
+                console.error("خطأ في تحميل الرسائل", e);
+            }
+        },
+
+        async sendMessage() {
+            if (!this.newMessage.trim() || !this.activeChat) return;
+            try {
+                let res = await axios.post(this.routes.sendMessage, {
+                    chat_id: this.activeChat.id,
+                    content: this.newMessage
+                });
+                this.messages.push(res.data);
+                this.newMessage = "";
+            } catch (e) {
+                console.error("خطأ في إرسال الرسالة", e);
+            }
+        }
+    }
+}
+</script>

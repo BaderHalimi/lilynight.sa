@@ -1,1 +1,179 @@
-<div class="flex-1 p-4 sm:p-6 lg:p-8"><div style="opacity: 1; transform: none;"><div class="space-y-8"><div class="flex justify-between items-center"><h2 class="text-3xl font-bold text-slate-800">قوالب العقود المخصصة</h2><button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary hover:bg-primary/90 shadow-md h-10 px-4 py-2 gradient-bg text-white"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 ml-2"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8"></path><path d="M12 8v8"></path></svg> إنشاء قالب جديد</button></div><div class="rounded-xl border border-slate-200 bg-white text-slate-900 shadow-sm"><div class="flex flex-col space-y-1.5 p-6"><h3 class="text-xl font-semibold leading-none tracking-tight">قوالب العقود (2)</h3><p class="text-sm text-slate-500">إدارة قوالب العقود التي يتم إنشاؤها تلقائياً للحجوزات الجديدة.</p></div><div class="p-6 pt-0"><div class="relative w-full overflow-auto"><table class="w-full caption-bottom text-sm"><thead class="[&amp;_tr]:border-b"><tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"><th class="h-12 px-4 text-right align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">اسم القالب</th><th class="h-12 px-4 text-right align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">آخر تحديث</th><th class="h-12 px-4 text-right align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">إجراءات</th></tr></thead><tbody class="[&amp;_tr:last-child]:border-0"><tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"><td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-semibold">عقد تأجير قاعة زفاف</td><td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">24 أغسطس 2025 21:58</td><td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 space-x-1 space-x-reverse"><button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-600"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></button><button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-red-600"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg></button></td></tr><tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"><td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-semibold">عقد خدمة تصوير فوتوغرافي</td><td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">22 أغسطس 2025 21:58</td><td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 space-x-1 space-x-reverse"><button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-blue-600"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg></button><button class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-red-600"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg></button></td></tr></tbody></table></div></div></div></div></div></div>
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+
+<div x-data="TemplateContracts()" class="p-6">
+
+    <!-- شريط علوي فيه زر + بحث -->
+    <div class="flex items-center justify-between mb-4">
+        <button @click="openCreateModal()"
+            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow">
+            + إنشاء قالب جديد
+        </button>
+
+        <input type="text" placeholder="🔍 ابحث عن قالب..."
+            x-model="search" @input="filterTemplates"
+            class="border rounded px-3 py-2 w-1/3">
+    </div>
+
+    <!-- جدول -->
+    <div class="mt-2 border rounded-lg overflow-hidden">
+        <table class="w-full text-sm">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="p-3 text-right">اسم القالب</th>
+                    <th class="p-3 text-right">آخر تحديث</th>
+                    <th class="p-3 text-right">الخيارات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="t in filteredTemplates" :key="t.id">
+                    <tr class="border-t hover:bg-gray-50">
+                        <td class="p-3 font-semibold" x-text="t.name"></td>
+                        <td class="p-3" x-text="t.updated_at"></td>
+                        <td class="p-3 flex gap-2">
+                            <button @click="openEditModal(t)"
+                                class="px-2 py-1 bg-yellow-500 text-white rounded">تعديل</button>
+                            <button @click="deleteTemplate(t.id)"
+                                class="px-2 py-1 bg-red-600 text-white rounded">حذف</button>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- مودال -->
+    <div x-show="openModal" x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+
+            <h2 class="text-xl font-bold mb-4" x-text="isEditing ? 'تعديل القالب' : 'إضافة قالب جديد'"></h2>
+
+            <form @submit.prevent="isEditing ? updateTemplate() : saveTemplate()">
+                <input type="hidden" x-model="form.provider_id">
+
+                <div class="mb-3">
+                    <label class="block text-sm mb-1">اسم القالب</label>
+                    <input type="text" x-model="form.name"
+                        class="w-full border rounded px-3 py-2" placeholder="اكتب اسم القالب">
+                </div>
+
+                <div class="mb-3">
+                    <label class="block text-sm mb-1">محتوى القالب</label>
+                    <textarea x-model="form.content"
+                        class="w-full border rounded px-3 py-2" rows="3"
+                        placeholder="اكتب نص القالب"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-2">
+                    <button type="button" @click="closeModal"
+                        class="px-4 py-2 border rounded">إلغاء</button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@php
+    $providerId = $provider->id;
+    $ContractTemplateRoutesStore = route('provider.Dashboard.ProviderContractTemplates.store');
+    $ContractTemplateRoutesGet = route('provider.Dashboard.GetContractTemplates', $provider->id);
+    $ContractTemplateRoutesDestroy = route('provider.Dashboard.ProviderContractTemplates.destroy', ":id");
+    $ContractTemplateRoutesUpdate = route('provider.Dashboard.ProviderContractTemplates.update' , ":id");
+    //dd($ContractTemplateRoutesGet);
+
+@endphp
+
+<script>
+function TemplateContracts() {
+    return {
+        openModal: false,
+        isEditing: false,
+        search: "",
+        templates: [],
+        filteredTemplates: [],
+        editId: null,
+        form: { provider_id: @json($providerId), name: "", content: "" },
+
+        async init() {
+            await this.getTemplates();
+        },
+
+        async getTemplates() {
+            let res = await fetch(@json($ContractTemplateRoutesGet));
+            this.templates = await res.json();
+            this.filteredTemplates = this.templates;
+        },
+
+        filterTemplates() {
+            let q = this.search.toLowerCase();
+            this.filteredTemplates = this.templates.filter(t => t.name.toLowerCase().includes(q));
+        },
+
+        openCreateModal() {
+            this.form = { provider_id: @json($providerId), name: "", content: "" };
+            this.isEditing = false;
+            this.openModal = true;
+        },
+
+        openEditModal(template) {
+            this.form = { provider_id: @json($providerId), name: template.name, content: template.content };
+            this.editId = template.id;
+            this.isEditing = true;
+            this.openModal = true;
+        },
+
+        closeModal() {
+            this.openModal = false;
+        },
+
+        async saveTemplate() {
+            let res = await fetch(@json($ContractTemplateRoutesStore), {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify(this.form)
+            });
+            if (res.ok) {
+                this.closeModal();
+                this.getTemplates();
+            }
+        },
+
+        async updateTemplate() {
+            let url = @json($ContractTemplateRoutesUpdate).replace(":id", this.editId);
+            let res = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify(this.form)
+            });
+            if (res.ok) {
+                this.closeModal();
+                this.getTemplates();
+            }
+        },
+
+        async deleteTemplate(id) {
+            if (!confirm("هل أنت متأكد من الحذف؟")) return;
+            let url = @json($ContractTemplateRoutesDestroy).replace(":id", id);
+            let res = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+                }
+            });
+            if (res.ok) {
+                this.getTemplates();
+            }
+        }
+    }
+}
+</script>

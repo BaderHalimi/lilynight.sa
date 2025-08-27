@@ -13,16 +13,15 @@ class ServicesController extends Controller
      */
     public function index($provider_id)
     {
-        $services = Services::where("provider_id", $provider_id)->get();
-       // dd($services);
+        $services = Services::where('provider_id', $provider_id)->get();
+        // dd($services);
         return response()->json($services);
     }
     public function GetServices($provider_id)
     {
-        $services = Services::where("provider_id", $provider_id)->get();
+        $services = Services::where('provider_id', $provider_id)->get();
         return response()->json($services);
     }
-    
 
     /**
      * Show the form for creating a new resource.
@@ -58,16 +57,15 @@ class ServicesController extends Controller
         if ($request->hasFile('service_main_image')) {
             $mainImagePath = $request->file('service_main_image')->store('services', 'public');
         }
-    
+
         $galleryFiles = [];
         if ($request->hasFile('service_gallery')) {
             foreach ($request->file('service_gallery') as $file) {
-                
                 $path = $file->store('services', 'public');
-                $galleryFiles[] = $path; 
+                $galleryFiles[] = $path;
             }
         }
-    
+
         $service = new Services();
         $service->name = $request->service_name;
         $service->price = $request->service_price;
@@ -82,24 +80,20 @@ class ServicesController extends Controller
             'on_demand' => $request->on_demand ?? false,
             'gallery' => $galleryFiles,
         ]);
-    
+
         $service->save();
-    
+
         return response()->json([
             'success' => true,
             'message' => 'Service has been created successfully',
-            'data' => $service
+            'data' => $service,
         ]);
     }
-    
 
     /**
      * Display the specified resource.
      */
-    public function show( $services)
-    {
-
-    }
+    public function show($services) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -115,34 +109,68 @@ class ServicesController extends Controller
      */
     public function update(Request $request, string $serviceID)
     {
+        $service = Services::findOrFail($serviceID);
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'price_unit' => 'nullable|string|max:50',
-            'type' => 'nullable|string|max:100',
-            'description' => 'nullable|string',
+            'service_name' => 'required|string|max:255',
+            'service_price' => 'required|numeric|min:0',
+            'service_category' => 'nullable|string|max:100',
+            'service_description' => 'nullable|string',
+            'service_features' => 'nullable|string',
+            'options' => 'nullable|array',
+            'addons' => 'nullable|array',
+            'days' => 'nullable|array',
+            'on_demand' => 'nullable|boolean',
+            'service_gallery.*' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2048',
+            'service_main_image' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2048',
         ]);
 
-        $service = Services::findOrFail($serviceID);
-        $service->name = $request->name ?? $service->name;
-        $service->price = $request->price ?? $service->price;
-        $service->price_unit = $request->price_unit ?? $service->price_unit;
-        $service->type = $request->type ??$service->type; 
-        $service->description = $request->description ?? $service->description;
+        // معالجة الصورة الرئيسية إذا تم رفعها
+        if ($request->hasFile('service_main_image')) {
+            $service->main_image = $request->file('service_main_image')->store('services', 'public');
+        }
+
+        if ($request->hasFile('service_gallery')) {
+            $galleryFiles = [];
+            foreach ($request->file('service_gallery') as $file) {
+                $galleryFiles[] = $file->store('services', 'public');
+            }
+
+            $existingGallery = json_decode($service->features, true)['gallery'] ?? [];
+            $service->features = json_encode(array_merge(json_decode($service->features, true) ?? [], ['gallery' => array_merge($existingGallery, $galleryFiles)]));
+        }
+
+        $service->name = $request->service_name ?? $service->name;
+        $service->price = $request->service_price ?? $service->price;
+        $service->type = $request->service_category ?? $service->type;
+        $service->description = $request->service_description ?? $service->description;
+
+        $featuresData = json_decode($service->features, true) ?? [];
+        $featuresData['features'] = $request->service_features ?? ($featuresData['features'] ?? '');
+        $featuresData['options'] = $request->options ?? ($featuresData['options'] ?? []);
+        $featuresData['addons'] = $request->addons ?? ($featuresData['addons'] ?? []);
+        $featuresData['days'] = $request->days ?? ($featuresData['days'] ?? []);
+        $featuresData['on_demand'] = $request->on_demand ?? ($featuresData['on_demand'] ?? false);
+
+        $service->features = json_encode($featuresData);
+
         $service->save();
 
-        return response()->json("service has been created Succesfully");
+        return response()->json([
+            'success' => true,
+            'message' => 'Service has been updated successfully',
+            'data' => $service,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $serviceID)
+    public function destroy($serviceID)
     {
         $service = Services::findOrFail($serviceID);
         $service->delete();
 
-        return response()->json("the service has been deleted Succesfully");
-
+        return response()->json('the service has been deleted Succesfully');
     }
 }

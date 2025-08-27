@@ -84,23 +84,23 @@ function sidebarData() {
         menuItems: {
             general: [
                 { page: 'overview', title: 'نظرة عامة', icon: 'ri-dashboard-line' },
-                { page: 'smart-notifications', title: 'الإشعارات الذكية', icon: 'ri-notification-line' },
+                // { page: 'smart-notifications', title: 'الإشعارات الذكية', icon: 'ri-notification-line' },
                 { page: 'merchant-profile', title: 'الملف الشخصي للتاجر', icon: 'ri-user-3-line' }
             ],
             bookings: [
-                { page: 'booking-calendar', title: 'تقويم الحجوزات والتوفر', icon: 'ri-calendar-event-line' },
+                //{ page: 'booking-calendar', title: 'تقويم الحجوزات والتوفر', icon: 'ri-calendar-event-line' },
                 { page: 'manual-booking', title: 'إضافة حجز يدوي', icon: 'ri-add-circle-line' },
-                { page: 'close-date', title: 'إغلاق تاريخ/فترة', icon: 'ri-close-circle-line' }
+                //{ page: 'close-date', title: 'إغلاق تاريخ/فترة', icon: 'ri-close-circle-line' }
             ],
             services: [
                 { page: 'manage-services', title: 'إدارة الخدمات والباقات', icon: 'ri-ticket-line' },
-                { page: 'individual-services', title: 'إدارة الخدمات الفردية', icon: 'ri-search-line' },
-                { page: 'manage-addons', title: 'إدارة الإضافات (Add-ons)', icon: 'ri-add-box-line' }
+                //{ page: 'individual-services', title: 'إدارة الخدمات الفردية', icon: 'ri-search-line' },
+                //{ page: 'manage-addons', title: 'إدارة الإضافات (Add-ons)', icon: 'ri-add-box-line' }
             ],
             ecommerce: [
-                { page: 'enable-online-sales', title: 'تفعيل البيع أونلاين', icon: 'ri-global-line' },
-                { page: 'terms-conditions', title: 'شروط وأحكام البيع', icon: 'ri-file-text-line' },
-                { page: 'compare-bookings', title: 'مقارنة الحجوزات', icon: 'ri-bar-chart-line' },
+                //{ page: 'enable-online-sales', title: 'تفعيل البيع أونلاين', icon: 'ri-global-line' },
+                //{ page: 'terms-conditions', title: 'شروط وأحكام البيع', icon: 'ri-file-text-line' },
+                //{ page: 'compare-bookings', title: 'مقارنة الحجوزات', icon: 'ri-bar-chart-line' },
                 { page: 'share-package-link', title: 'مشاركة رابط باقة/دفع', icon: 'ri-share-line' }
             ],
             finance: [
@@ -114,26 +114,26 @@ function sidebarData() {
             ],
             analytics: [
                 { page: 'customer-reviews', title: 'تقييمات العملاء والردود', icon: 'ri-star-line' },
-                { page: 'internal-evaluation', title: 'تقييم داخلي للعملاء', icon: 'ri-user-check-line' },
+               // { page: 'internal-evaluation', title: 'تقييم داخلي للعملاء', icon: 'ri-user-check-line' },
                 { page: 'performance-reports', title: 'تقارير الأداء والتحليلات', icon: 'ri-bar-chart-line' },
-                { page: 'ai-analytics', title: 'التحليلات المتقدمة والذكاء الاصطناعي', icon: 'ri-brain-line' }
+                //{ page: 'ai-analytics', title: 'التحليلات المتقدمة والذكاء الاصطناعي', icon: 'ri-brain-line' }
             ],
             team: [
                 { page: 'team-management', title: 'إدارة الموظفين والمساعدين', icon: 'ri-team-line' },
                 { page: 'activity-log', title: 'سجل نشاط الفريق', icon: 'ri-history-line' }
             ],
             marketing: [
-                { page: 'temporary-offers', title: 'العروض المؤقتة', icon: 'ri-time-line' },
+                //{ page: 'temporary-offers', title: 'العروض المؤقتة', icon: 'ri-time-line' },
                 { page: 'coupons', title: 'إنشاء كوبونات وعروض', icon: 'ri-coupon-line' },
-                { page: 'dynamic-pricing', title: 'التسعير الديناميكي (تجريبي)', icon: 'ri-price-tag-line' },
-                { page: 'social-media', title: 'ربط ومشاركة عبر السوشيال ميديا', icon: 'ri-share-line' },
+                //{ page: 'dynamic-pricing', title: 'التسعير الديناميكي (تجريبي)', icon: 'ri-price-tag-line' },
+                //{ page: 'social-media', title: 'ربط ومشاركة عبر السوشيال ميديا', icon: 'ri-share-line' },
                 { page: 'email-campaigns', title: 'حملات بريدية للعملاء', icon: 'ri-mail-line' },
-                { page: 'loyalty-program', title: 'برنامج ولاء العملاء', icon: 'ri-heart-line' }
+               // { page: 'loyalty-program', title: 'برنامج ولاء العملاء', icon: 'ri-heart-line' }
             ],
             security: [
-                { page: 'login-settings', title: 'إعدادات تسجيل الدخول الآمن', icon: 'ri-shield-line' },
+               // { page: 'login-settings', title: 'إعدادات تسجيل الدخول الآمن', icon: 'ri-shield-line' },
                 { page: 'login-history', title: 'سجل الدخول للحساب', icon: 'ri-login-box-line' },
-                { page: 'error-review', title: 'مراجعة الأخطاء والمشاكل', icon: 'ri-error-warning-line' }
+                //{ page: 'error-review', title: 'مراجعة الأخطاء والمشاكل', icon: 'ri-error-warning-line' }
             ],
             help: [
                 { page: 'help-center', title: 'مركز المساعدة وقاعدة المعرفة', icon: 'ri-book-open-line' },
@@ -141,18 +141,18 @@ function sidebarData() {
                 { page: 'faq', title: 'الأسئلة الشائعة', icon: 'ri-question-line' }
             ],
             customization: [
-                { page: 'branding', title: 'الألوان، الشعار، والغلاف', icon: 'ri-palette-line' },
-                { page: 'service-order', title: 'ترتيب عرض الخدمات والباقات', icon: 'ri-list-ordered' },
+                //{ page: 'branding', title: 'الألوان، الشعار، والغلاف', icon: 'ri-palette-line' },
+                //{ page: 'service-order', title: 'ترتيب عرض الخدمات والباقات', icon: 'ri-list-ordered' },
                 { page: 'about-section', title: 'إضافة قسم "نبذة عنا"', icon: 'ri-information-line' }
             ],
             settings: [
                 { page: 'branch-management', title: 'إدارة الفروع (إذا متعددة)', icon: 'ri-git-branch-line' },
                 { page: 'check-in', title: 'التحقق من الحضور (Check-in)', icon: 'ri-qr-code-line' },
                 { page: 'pos-system', title: 'نظام البيع الداخلي (POS)', icon: 'ri-printer-line' },
-                { page: 'corporate-booking', title: 'نظام حجز الشركات', icon: 'ri-building-line' },
+                //{ page: 'corporate-booking', title: 'نظام حجز الشركات', icon: 'ri-building-line' },
                 { page: 'platform-policies', title: 'السياسات العامة للمنصة', icon: 'ri-settings-line' },
-                { page: 'languages', title: 'اللغات والترجمة للمحتوى', icon: 'ri-global-line' },
-                { page: 'api-integration', title: 'الربط البرمجي (API)', icon: 'ri-code-line' },
+                //{ page: 'languages', title: 'اللغات والترجمة للمحتوى', icon: 'ri-global-line' },
+                //{ page: 'api-integration', title: 'الربط البرمجي (API)', icon: 'ri-code-line' },
                 { page: 'message-center', title: 'مركز الرسائل مع العملاء', icon: 'ri-message-line' }
             ]
         },

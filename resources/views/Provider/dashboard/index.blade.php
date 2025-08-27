@@ -224,7 +224,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:leave-end="opacity-0 -translate-y-8">
                 @include('Provider.dashboard.pages.performance-reports', ['provider' => $provider, 'storage' => $storage])            </div>
 
-            <!-- صفحة AI Analytics -->
+            <!-- صفحة AI Analytics
             <div x-show="currentTab === 'ai-analytics'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
@@ -232,7 +232,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.ai-analytics', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.ai-analytics', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Team Management -->
             <div x-show="currentTab === 'team-management'" 
@@ -254,7 +254,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:leave-end="opacity-0 -translate-y-8">
                 @include('Provider.dashboard.pages.activity-log', ['provider' => $provider, 'storage' => $storage])            </div>
 
-            <!-- صفحة Temporary Offers -->
+            <!-- صفحة Temporary Offers
             <div x-show="currentTab === 'temporary-offers'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
@@ -262,7 +262,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.temporary-offers', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.temporary-offers', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Coupons -->
             <div x-show="currentTab === 'coupons'" 
@@ -275,17 +275,17 @@ $provider = auth()->user()->providers()->first();
                 @include('Provider.dashboard.pages.coupons', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Dynamic Pricing -->
-            <div x-show="currentTab === 'dynamic-pricing'" 
+            <!-- <div x-show="currentTab === 'dynamic-pricing'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.dynamic-pricing', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.dynamic-pricing', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Social Media -->
-            <div x-show="currentTab === 'social-media'" 
+            <!-- <div x-show="currentTab === 'social-media'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
                  x-transition:enter-end="opacity-100 translate-y-0"
@@ -294,7 +294,6 @@ $provider = auth()->user()->providers()->first();
                  x-transition:leave-end="opacity-0 -translate-y-8">
                 @include('Provider.dashboard.pages.social-media', ['provider' => $provider, 'storage' => $storage])            </div>
 
-            <!-- صفحة Email Campaigns -->
             <div x-show="currentTab === 'email-campaigns'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
@@ -302,27 +301,27 @@ $provider = auth()->user()->providers()->first();
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.email-campaigns', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.email-campaigns', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Loyalty Program -->
-            <div x-show="currentTab === 'loyalty-program'" 
+            <!-- <div x-show="currentTab === 'loyalty-program'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.loyalty-program', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.loyalty-program', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Login Settings -->
-            <div x-show="currentTab === 'login-settings'" 
+            <!-- <div x-show="currentTab === 'login-settings'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.login-settings', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.login-settings', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Login History -->
             <div x-show="currentTab === 'login-history'" 
@@ -335,14 +334,14 @@ $provider = auth()->user()->providers()->first();
                 @include('Provider.dashboard.pages.login-history', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Error Review -->
-            <div x-show="currentTab === 'error-review'" 
+            <!-- <div x-show="currentTab === 'error-review'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.error-review', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.error-review', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Help Center -->
             <div x-show="currentTab === 'help-center'" 
@@ -385,14 +384,14 @@ $provider = auth()->user()->providers()->first();
                 @include('Provider.dashboard.pages.branding', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Service Order -->
-            <div x-show="currentTab === 'service-order'" 
+            <!-- <div x-show="currentTab === 'service-order'" 
                  x-transition:enter="transition ease-out duration-300 transform"
                  x-transition:enter-start="opacity-0 translate-y-8"
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
                  x-transition:leave-end="opacity-0 -translate-y-8">
-                @include('Provider.dashboard.pages.service-order', ['provider' => $provider, 'storage' => $storage])            </div>
+                @include('Provider.dashboard.pages.service-order', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة About Section -->
             <div x-show="currentTab === 'about-section'" 

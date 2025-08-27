@@ -122,7 +122,7 @@
         <main class="relative flex-1 overflow-y-auto">
             @include('Provider.layouts.nav')
 
-            <div class="sm:p-6 lg:p-8">
+            <div class="">
                 @yield('content')
             </div>
         </main>
