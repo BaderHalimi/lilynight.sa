@@ -41,7 +41,7 @@ $provider = auth()->user()->providers()->first();
              x-transition:enter-end="opacity-100 translate-y-0"
              x-transition:leave="transition ease-in duration-150 transform"
              x-transition:leave-start="opacity-100 translate-y-0"
-             x-transition:leave-end="opacity-0 -translate-y-8">
+             x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
             @include('Provider.dashboard.pages.overview', ['provider' => $provider, 'storage' => $storage])
         </div>
 
@@ -52,7 +52,7 @@ $provider = auth()->user()->providers()->first();
              x-transition:enter-end="opacity-100 translate-y-0"
              x-transition:leave="transition ease-in duration-150 transform"
              x-transition:leave-start="opacity-100 translate-y-0"
-             x-transition:leave-end="opacity-0 -translate-y-8">
+             x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
             @include('Provider.dashboard.pages.providerProfile', ['provider' => $provider, 'storage' => $storage])        </div>
 
             <!-- صفحة Smart Notifications -->
@@ -62,7 +62,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.smart-notifications', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Dashboard -->
@@ -72,7 +72,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.dashboard', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Profile -->
@@ -82,7 +82,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.profile', ['provider' => $provider, 'storage' => $storage])   </div>
 
             <div x-show="currentTab === 'manage-services'" 
@@ -91,7 +91,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.service-managment', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة My Bookings -->
@@ -101,7 +101,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.my-bookings', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة View Dates -->
@@ -111,7 +111,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.view-dates', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Notifications -->
@@ -121,7 +121,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.notifications', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Financial Record -->
@@ -131,7 +131,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.financial-record', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Rewards -->
@@ -141,7 +141,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.rewards', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Reviews -->
@@ -151,7 +151,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.reviews', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Support -->
@@ -161,7 +161,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.support', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Contracts -->
@@ -171,7 +171,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.contracts', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Contract Management -->
@@ -181,7 +181,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.contract-management', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Contract Templates -->
@@ -191,7 +191,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.contract-templates', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Customer Reviews -->
@@ -201,7 +201,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.customer-reviews', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Internal Evaluation -->
@@ -211,7 +211,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.internal-evaluation', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Performance Reports -->
@@ -221,7 +221,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.performance-reports', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة AI Analytics
@@ -231,7 +231,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.ai-analytics', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Team Management -->
@@ -241,7 +241,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.team-management', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Activity Log -->
@@ -251,7 +251,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.activity-log', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Temporary Offers
@@ -261,7 +261,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.temporary-offers', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Coupons -->
@@ -271,7 +271,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.coupons', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Dynamic Pricing -->
@@ -281,7 +281,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.dynamic-pricing', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Social Media -->
@@ -291,7 +291,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.social-media', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <div x-show="currentTab === 'email-campaigns'" 
@@ -300,7 +300,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.email-campaigns', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Loyalty Program -->
@@ -310,7 +310,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.loyalty-program', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Login Settings -->
@@ -320,7 +320,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.login-settings', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Login History -->
@@ -330,7 +330,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.login-history', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Error Review -->
@@ -340,7 +340,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.error-review', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة Help Center -->
@@ -350,7 +350,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.help-center', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Support Ticket -->
@@ -360,7 +360,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.support-ticket', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة FAQ -->
@@ -370,7 +370,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.faq', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Branding -->
@@ -380,7 +380,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.branding', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Service Order -->
@@ -390,7 +390,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.service-order', ['provider' => $provider, 'storage' => $storage])            </div> -->
 
             <!-- صفحة About Section -->
@@ -400,7 +400,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.about-section', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Branch Management -->
@@ -410,7 +410,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.branch-management', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Check-in -->
@@ -420,7 +420,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.check-in', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة POS System -->
@@ -430,7 +430,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.pos-system', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Corporate Booking -->
@@ -440,7 +440,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.corporate-booking', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Platform Policies -->
@@ -450,7 +450,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.platform-policies', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Languages -->
@@ -460,7 +460,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.languages', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة API Integration -->
@@ -470,7 +470,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.api-integration', ['provider' => $provider, 'storage' => $storage])            </div>
 
             <!-- صفحة Message Center -->
@@ -480,7 +480,7 @@ $provider = auth()->user()->providers()->first();
                  x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150 transform"
                  x-transition:leave-start="opacity-100 translate-y-0"
-                 x-transition:leave-end="opacity-0 -translate-y-8">
+                 x-transition:leave-end="opacity-0 -translate-y-8" x-cloak>
                 @include('Provider.dashboard.pages.message-center', ['provider' => $provider, 'storage' => $storage])            </div>
 
         </div>

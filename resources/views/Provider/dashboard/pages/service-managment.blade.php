@@ -1537,82 +1537,84 @@
 
         // ---- populateFormDataForEditing ----
 
-function populateFormDataForEditing(serviceData) {
-    // تحويل features من JSON لو كانت string
-    const features = typeof serviceData.features === 'string' ? JSON.parse(serviceData.features) : serviceData.features;
+        function populateFormDataForEditing(serviceData) {
+            // تحويل features من JSON لو كانت string
+            const features = typeof serviceData.features === 'string' ? JSON.parse(serviceData.features) :
+                serviceData.features;
 
-    // -------------------
-    // الحقول الأساسية
-    // -------------------
-    document.getElementById("service_name").value = serviceData.name || '';
-    document.getElementById("service_category").value = serviceData.type || '';
-    document.getElementById("service_description").value = serviceData.description || '';
-    document.getElementById("service_price").value = serviceData.price || '';
-    document.getElementById("service_features").value = features?.features || '';
+            // -------------------
+            // الحقول الأساسية
+            // -------------------
+            document.getElementById("service_name").value = serviceData.name || '';
+            document.getElementById("service_category").value = serviceData.type || '';
+            document.getElementById("service_description").value = serviceData.description || '';
+            document.getElementById("service_price").value = serviceData.price || '';
+            document.getElementById("service_features").value = features?.features || '';
 
-    // -------------------
-    // Alpine.js state
-    // -------------------
-    const alpineEl = document.querySelector('[x-data]');
-    if (alpineEl && alpineEl.__x) {
-        // خيارات: نضيف القيم بدون مسح القديم
-        if (features?.options && features.options.length) {
-            features.options.forEach(opt => {
-                if (!alpineEl.__x.$data.options.includes(opt)) {
-                    alpineEl.__x.$data.options.push(opt);
+            // -------------------
+            // Alpine.js state
+            // -------------------
+            const alpineEl = document.querySelector('[x-data]');
+            if (alpineEl && alpineEl.__x) {
+                // خيارات: نضيف القيم بدون مسح القديم
+                if (features?.options && features.options.length) {
+                    features.options.forEach(opt => {
+                        if (!alpineEl.__x.$data.options.includes(opt)) {
+                            alpineEl.__x.$data.options.push(opt);
+                        }
+                    });
                 }
+
+                // اضافات: نضيف القيم بدون تكرار
+                if (features?.addons && features.addons.length) {
+                    features.addons.forEach(addon => {
+                        const exists = alpineEl.__x.$data.addons.some(a => a.name === addon.name && a
+                            .price == addon.price);
+                        if (!exists) alpineEl.__x.$data.addons.push(addon);
+                    });
+                }
+
+                // حسب الطلب
+                alpineEl.__x.$data.onDemandGlobal = features?.on_demand == "1" || features?.on_demand === true;
+            }
+
+            // -------------------
+            // الأيام والأوقات
+            // -------------------
+            const days = features?.days || [];
+            days.forEach((day, idx) => {
+                const fromEl = document.getElementById(`Serviceday_${idx}_from`);
+                const toEl = document.getElementById(`Serviceday_${idx}_to`);
+                const activeEl = document.getElementById(`Serviceday_${idx}_active`);
+                if (fromEl) fromEl.value = day.from || '';
+                if (toEl) toEl.value = day.to || '';
+                if (activeEl) activeEl.checked = day.active == "1" ? true : false;
             });
+
+            // -------------------
+            // عرض معرض الصور القديمة
+            // -------------------
+            const galleryContainerId = 'existingGalleryFiles';
+            let galleryContainer = document.getElementById(galleryContainerId);
+            if (!galleryContainer) {
+                const inputGallery = document.getElementById('service_gallery');
+                galleryContainer = document.createElement('div');
+                galleryContainer.id = galleryContainerId;
+                galleryContainer.classList.add('mt-2', 'text-sm', 'text-slate-600');
+                inputGallery.parentNode.insertBefore(galleryContainer, inputGallery.nextSibling);
+            }
+
+            galleryContainer.innerHTML = '';
+            if (features?.gallery && features.gallery.length) {
+                const list = document.createElement('ul');
+                features.gallery.forEach(file => {
+                    const li = document.createElement('li');
+                    li.textContent = file.split('/').pop(); // يظهر اسم الملف فقط
+                    list.appendChild(li);
+                });
+                galleryContainer.appendChild(list);
+            }
         }
-
-        // اضافات: نضيف القيم بدون تكرار
-        if (features?.addons && features.addons.length) {
-            features.addons.forEach(addon => {
-                const exists = alpineEl.__x.$data.addons.some(a => a.name === addon.name && a.price == addon.price);
-                if (!exists) alpineEl.__x.$data.addons.push(addon);
-            });
-        }
-
-        // حسب الطلب
-        alpineEl.__x.$data.onDemandGlobal = features?.on_demand == "1" || features?.on_demand === true;
-    }
-
-    // -------------------
-    // الأيام والأوقات
-    // -------------------
-    const days = features?.days || [];
-    days.forEach((day, idx) => {
-        const fromEl = document.getElementById(`Serviceday_${idx}_from`);
-        const toEl = document.getElementById(`Serviceday_${idx}_to`);
-        const activeEl = document.getElementById(`Serviceday_${idx}_active`);
-        if (fromEl) fromEl.value = day.from || '';
-        if (toEl) toEl.value = day.to || '';
-        if (activeEl) activeEl.checked = day.active == "1" ? true : false;
-    });
-
-    // -------------------
-    // عرض معرض الصور القديمة
-    // -------------------
-    const galleryContainerId = 'existingGalleryFiles';
-    let galleryContainer = document.getElementById(galleryContainerId);
-    if (!galleryContainer) {
-        const inputGallery = document.getElementById('service_gallery');
-        galleryContainer = document.createElement('div');
-        galleryContainer.id = galleryContainerId;
-        galleryContainer.classList.add('mt-2', 'text-sm', 'text-slate-600');
-        inputGallery.parentNode.insertBefore(galleryContainer, inputGallery.nextSibling);
-    }
-
-    galleryContainer.innerHTML = '';
-    if (features?.gallery && features.gallery.length) {
-        const list = document.createElement('ul');
-        features.gallery.forEach(file => {
-            const li = document.createElement('li');
-            li.textContent = file.split('/').pop(); // يظهر اسم الملف فقط
-            list.appendChild(li);
-        });
-        galleryContainer.appendChild(list);
-    }
-}
 
 
         // ---- save/update handler ----
@@ -1803,10 +1805,10 @@ function populateFormDataForEditing(serviceData) {
         document.addEventListener('click', function(e) {
             if (e.target.matches(
                     '[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]'
-                    ) ||
+                ) ||
                 e.target.closest(
                     '[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]'
-                    )) {
+                )) {
                 resetForm();
             }
         });

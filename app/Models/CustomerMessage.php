@@ -11,7 +11,7 @@ class CustomerMessage extends Model
     protected $table = 'customer_messages';
     protected $fillable = [
         'chat_id',
-        'sender_type', 
+        'sender_id', 
         'message',
         'attachment',
         'meta',

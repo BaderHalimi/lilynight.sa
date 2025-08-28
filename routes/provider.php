@@ -14,6 +14,9 @@ use GuzzleHttp\Psr7\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CustomerMessageController;
 use App\Http\Controllers\CustomerChatsController;
+
+use App\Http\Controllers\SupportTicketsController;
+
 Route::middleware(['auth', 'verified'])
     ->prefix('Dashboard')
     ->name('Dashboard.')
@@ -21,11 +24,11 @@ Route::middleware(['auth', 'verified'])
 
 
         Route::get('/{provider}', function ($provider) {
-            if(!auth()->user()->providers()->exists()){
+            if (!auth()->user()->providers()->exists()) {
                 return redirect()->route('ProviderCommercial');
             }
             $provider = auth()->user()->providers()->findOrFail($provider);
-            return view('Provider.dashboard.index',compact('provider'));
+            return view('Provider.dashboard.index', compact('provider'));
         })->name('overview');
 
 
@@ -35,7 +38,7 @@ Route::middleware(['auth', 'verified'])
         //             'redirect' => route('ProviderCommercial')
         //         ]);
         //     }
-            
+
         //     $Provider = auth()->user()->providers()->first();
         //     return response()->json([
         //         'Provider' => $Provider,
@@ -60,13 +63,19 @@ Route::middleware(['auth', 'verified'])
         Route::get('Provider-ContractTemplates/{provider}', [ContractTemplatesController::class, 'GetContractTemplates'])->name("GetContractTemplates");
         Route::resource('Provider-ContractTemplates', ContractTemplatesController::class)->names("ProviderContractTemplates");
 
-        Route::get("Provider_Chat/{provider}",[CustomerChatsController::class, 'GetChats'])->name("ProviderGetChat");
-        Route::resource("Provider-Chat",CustomerChatsController::class)->names("ProviderChat");
+        Route::get("Provider_Chat/{provider}", [CustomerChatsController::class, 'GetChats'])->name("ProviderGetChat");
+        Route::resource("Provider-Chat", CustomerChatsController::class)->names("ProviderChat");
 
-        Route::get("Provider_Message/{provider}",[CustomerMessageController::class, 'GetChatMessages'])->name("ProviderGetChatMessage");
-        Route::resource("Provider-Message",CustomerMessageController::class)->names("ProviderChatMessage");
+        Route::get("Provider_Message/{provider}", [CustomerMessageController::class, 'GetChatMessages'])->name("ProviderGetChatMessage");
+        Route::resource("Provider-Message", CustomerMessageController::class)->names("ProviderChatMessage");
 
-        Route::get('Provider-about/{id}', function($id){
+        Route::get("Provider_GetTickets/{user_id}",[SupportTicketsController::class, 'GetSupportTickets'])
+        ->name("Provider_GetTickets");
+        Route::resource("Provider-Tickets", SupportTicketsController::class)->names("ProviderTickets");
+
+
+
+        Route::get('Provider-about/{id}', function ($id) {
             $Provider = auth()->user()->providers()->findOrFail($id);
             $about = $Provider->description;
             return response()->json([
@@ -74,7 +83,7 @@ Route::middleware(['auth', 'verified'])
             ]);
         })->name("Provider.about");
 
-        Route::put('Provider-updateAbout/{id}', function(Request $request,$id){
+        Route::put('Provider-updateAbout/{id}', function (Request $request, $id) {
 
             $Provider = auth()->user()->providers()->findOrFail($id);
 
