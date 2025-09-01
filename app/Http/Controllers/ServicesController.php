@@ -34,6 +34,7 @@ class ServicesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         $provider = auth()->user()->providers()->findOrFail($request->provider_id);
@@ -41,7 +42,7 @@ class ServicesController extends Controller
         $request->validate([
             'service_name' => 'required|string|max:255',
             'service_price' => 'required|numeric|min:0',
-            'service_category' => 'nullable|string|max:100',
+            'service_category' => 'required|string|in:halls_palaces,catering_buffet,photo_video,beauty_makeup,entertainment_shows,transportation,security_guard,flowers_invitations',
             'service_description' => 'nullable|string',
             'service_features' => 'nullable|string',
             'options' => 'nullable|array',
@@ -50,20 +51,46 @@ class ServicesController extends Controller
             'on_demand' => 'nullable|boolean',
             'service_gallery.*' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2048',
             'service_main_image' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2048',
+            'service_location' => 'nullable|string|max:255',
             'provider_id' => 'required|exists:providers,id',
         ]);
 
+        // main image
         $mainImagePath = null;
         if ($request->hasFile('service_main_image')) {
             $mainImagePath = $request->file('service_main_image')->store('services', 'public');
         }
 
+        // gallery
         $galleryFiles = [];
         if ($request->hasFile('service_gallery')) {
             foreach ($request->file('service_gallery') as $file) {
-                $path = $file->store('services', 'public');
-                $galleryFiles[] = $path;
+                $galleryFiles[] = $file->store('services', 'public');
             }
+        }
+
+        // build features
+        $features = [];
+        if (!empty($request->service_features)) {
+            $features['features'] = $request->service_features;
+        }
+        if (!empty($request->options)) {
+            $features['options'] = $request->options;
+        }
+        if (!empty($request->addons)) {
+            $features['addons'] = $request->addons;
+        }
+        if (!empty($request->days)) {
+            $features['days'] = $request->days;
+        }
+        if ($request->filled('on_demand')) {
+            $features['on_demand'] = (bool) $request->on_demand;
+        }
+        if (!empty($galleryFiles)) {
+            $features['gallery'] = $galleryFiles;
+        }
+        if (!empty($mainImagePath)) {
+            $features['service_main_image'] = $mainImagePath;
         }
 
         $service = new Services();
@@ -71,16 +98,9 @@ class ServicesController extends Controller
         $service->price = $request->service_price;
         $service->type = $request->service_category;
         $service->description = $request->service_description;
+        $service->service_location = $request->service_location;
         $service->provider_id = $provider->id;
-        $service->features = json_encode([
-            'features' => $request->service_features,
-            'options' => $request->options ?? [],
-            'addons' => $request->addons ?? [],
-            'days' => $request->days ?? [],
-            'on_demand' => $request->on_demand ?? false,
-            'gallery' => $galleryFiles,
-        ]);
-
+        $service->features = json_encode($features, JSON_UNESCAPED_UNICODE);
         $service->save();
 
         return response()->json([
@@ -123,36 +143,55 @@ class ServicesController extends Controller
             'on_demand' => 'nullable|boolean',
             'service_gallery.*' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2048',
             'service_main_image' => 'nullable|image|mimes:png,jpg,jpeg,gif|max:2048',
+            'service_location' => 'nullable|string|max:255',
         ]);
 
-        // معالجة الصورة الرئيسية إذا تم رفعها
+        // فك features القديمة
+        $featuresData = json_decode($service->features, true) ?? [];
+
+        // main image
         if ($request->hasFile('service_main_image')) {
-            $service->main_image = $request->file('service_main_image')->store('services', 'public');
+            $featuresData['service_main_image'] = $request->file('service_main_image')->store('services', 'public');
         }
 
+        // gallery
         if ($request->hasFile('service_gallery')) {
             $galleryFiles = [];
             foreach ($request->file('service_gallery') as $file) {
                 $galleryFiles[] = $file->store('services', 'public');
             }
-
-            $existingGallery = json_decode($service->features, true)['gallery'] ?? [];
-            $service->features = json_encode(array_merge(json_decode($service->features, true) ?? [], ['gallery' => array_merge($existingGallery, $galleryFiles)]));
+            $existingGallery = $featuresData['gallery'] ?? [];
+            $featuresData['gallery'] = array_merge($existingGallery, $galleryFiles);
         }
 
+        // باقي الحقول
+        if (!empty($request->service_features)) {
+            $featuresData['features'] = $request->service_features;
+        }
+
+        if (!empty($request->options)) {
+            $featuresData['options'] = $request->options;
+        }
+
+        if (!empty($request->addons)) {
+            $featuresData['addons'] = $request->addons;
+        }
+
+        if (!empty($request->days)) {
+            $featuresData['days'] = $request->days;
+        }
+
+        if ($request->filled('on_demand')) {
+            $featuresData['on_demand'] = (bool) $request->on_demand;
+        }
+
+        // تحديث البيانات الرئيسية
         $service->name = $request->service_name ?? $service->name;
         $service->price = $request->service_price ?? $service->price;
         $service->type = $request->service_category ?? $service->type;
         $service->description = $request->service_description ?? $service->description;
-
-        $featuresData = json_decode($service->features, true) ?? [];
-        $featuresData['features'] = $request->service_features ?? ($featuresData['features'] ?? '');
-        $featuresData['options'] = $request->options ?? ($featuresData['options'] ?? []);
-        $featuresData['addons'] = $request->addons ?? ($featuresData['addons'] ?? []);
-        $featuresData['days'] = $request->days ?? ($featuresData['days'] ?? []);
-        $featuresData['on_demand'] = $request->on_demand ?? ($featuresData['on_demand'] ?? false);
-
-        $service->features = json_encode($featuresData);
+        $service->service_location = $request->service_location ?? $service->service_location;
+        $service->features = json_encode($featuresData, JSON_UNESCAPED_UNICODE);
 
         $service->save();
 

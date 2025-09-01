@@ -6,7 +6,15 @@
                 <span class="text-xl font-bold gradient-text">ليلة الليليوم</span>
             </div>
             <div class="hidden md:flex items-center space-x-1 space-x-reverse" bis_skin_checked="1">
-                <button class="px-4 py-2 rounded-lg transition-all duration-300 relative font-medium text-gray-600 hover:text-primary">الخدمات</button>
+
+                <a href="{{ route('services-show') }}" wire:navigate class="relative">
+                    <button class="px-4 py-2 rounded-lg transition-all duration-300 font-medium text-gray-600 hover:text-primary border-b-2 border-transparent {{ request()->routeIs('services-show') ? 'border-pink-500' : '' }}">
+                        الخدمات
+                    </button>
+                    <span class="absolute inset-0 bg-pink-200/20 opacity-0 hover:opacity-100 rounded-lg pointer-events-none"></span>
+                </a>
+                
+
                 <button class="px-4 py-2 rounded-lg transition-all duration-300 relative font-medium text-gray-600 hover:text-primary">مميزاتنا</button>
                 <button class="px-4 py-2 rounded-lg transition-all duration-300 relative font-medium text-gray-600 hover:text-primary">رحلة مزوّد الخدمة</button>
                 <button class="px-4 py-2 rounded-lg transition-all duration-300 relative font-medium text-gray-600 hover:text-primary">نظام الشركاء</button>

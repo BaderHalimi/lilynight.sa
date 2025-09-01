@@ -15,6 +15,7 @@ class Services extends Model
         'type',
         'provider_id',
         'description',
+        'service_location',
         'features',
         'meta',
     ];

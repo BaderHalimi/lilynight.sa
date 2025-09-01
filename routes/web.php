@@ -33,6 +33,9 @@ Route::view('profile', 'profile')
 Volt::route('StartProvider', 'pages.provider.Start_Provider')
     ->middleware(['auth', 'verified'])
     ->name('ProviderCommercial');
+
+Route::get('/Services', function () {
+    return view("Services-Show");})->name("services-show");
 require __DIR__.'/auth.php';
 
 // routes/web.php

@@ -5,43 +5,39 @@
 
 <div class="flex-1 p-4 sm:p-6 lg:p-8" x-data="{ activeTab: 'venues', activeModal: 'service', openModalServices: false }">
     <div x-cloak class="relative" id="serviceModal">
-
         <div x-show="openModalServices" x-data="{
             options: [],
             addons: [],
-            addOption() { this.options.push('') },
+            addOption() { this.options.push({id: null, name: ''}) },
             removeOption(i) { this.options.splice(i, 1) },
-            addAddon() { this.addons.push({ name: '', price: '' }) },
+            addAddon() { this.addons.push({ id: null, name: '', price: '' }) },
             removeAddon(i) { this.addons.splice(i, 1) },
-            onDemandGlobal: false
-        }"
-            class="fixed inset-0 flex items-center justify-center bg-black/50 z-50" x-transition>
-
+            onDemandGlobal: false,
+            activeModal: 'service'
+        }" class="fixed inset-0 flex items-center justify-center bg-black/50 z-50" x-transition>
+    
             <div class="bg-white rounded-2xl shadow-xl w-full max-w-5xl p-6 relative overflow-y-auto max-h-[90vh]"
                 @click.away="openModalServices=false">
-
-                <!-- رأس -->
+    
                 <div class="flex justify-between items-center border-b pb-3 mb-4">
                     <h2 class="text-lg font-semibold text-slate-700 flex items-center gap-2">
                         <i class="ri-tools-line text-pink-500"></i> إنشاء خدمة جديدة
                     </h2>
-                    <button @click="openModalServices=false"
-                        class="text-slate-500 hover:text-slate-700 text-xl">&times;</button>
+                    <button @click="openModalServices=false" class="text-slate-500 hover:text-slate-700 text-xl">&times;</button>
                 </div>
-
-                <!-- التابات -->
+    
                 <div class="flex flex-wrap gap-2 border-b mb-4">
                     <template
                         x-for="tab in [
-        {id:'service',label:'الخدمة',icon:'ri-briefcase-4-line'},
-        {id:'details',label:'الوصف',icon:'ri-file-text-line'},
-        {id:'pricing',label:'التسعير',icon:'ri-price-tag-3-line'},
-        {id:'features',label:'المميزات',icon:'ri-star-line'},
-        {id:'gallery',label:'المعرض',icon:'ri-image-line'},
-        {id:'options',label:'الخيارات',icon:'ri-settings-3-line'},
-        {id:'addons',label:'الإضافات',icon:'ri-play-list-add-line'},
-        {id:'availability',label:'الأيام والأوقات',icon:'ri-calendar-2-line'}
-      ]">
+                            {id:'service',label:'الخدمة',icon:'ri-briefcase-4-line'},
+                            {id:'details',label:'الوصف',icon:'ri-file-text-line'},
+                            {id:'pricing',label:'التسعير',icon:'ri-price-tag-3-line'},
+                            {id:'features',label:'المميزات',icon:'ri-star-line'},
+                            {id:'gallery',label:'المعرض',icon:'ri-image-line'},
+                            {id:'optionsT',label:'الخيارات',icon:'ri-settings-3-line'},
+                            {id:'addons',label:'الإضافات',icon:'ri-play-list-add-line'},
+                            {id:'availability',label:'الأيام والأوقات',icon:'ri-calendar-2-line'}
+                        ]">
                         <button @click="activeModal=tab.id"
                             :class="activeModal === tab.id ? 'bg-pink-500 text-white' : 'bg-slate-100 text-slate-600'"
                             class="px-4 py-2 rounded-t-lg font-medium transition-all flex items-center gap-2">
@@ -49,33 +45,43 @@
                         </button>
                     </template>
                 </div>
-
-                <!-- المحتوى -->
+    
                 <div class="p-4 space-y-4">
-
-                    <!-- الخدمة -->
+    
                     <div x-show="activeModal==='service'" x-transition.duration.400ms>
                         <label class="block text-slate-600 mb-1">اسم الخدمة</label>
                         <input id="service_name" type="text" class="w-full border rounded-lg px-3 py-2 mb-3">
+    
+                        <label class="block text-slate-600 mb-1">مكان الخدمة</label>
+                        <input id="service_location" type="text" class="w-full border rounded-lg px-3 py-2 mb-3">
+    
                         <label class="block text-slate-600 mb-1">الصورة الرئيسية</label>
-                        <input type="file" id="service_main_image" accept=".png,.jpg,.jpeg,.gif"
-                            class="w-full border rounded-lg px-3 py-2 mb-3">
+                        <div class="flex items-center gap-4">
+                            <img id="preview_service_main_image" src="/images/default.png" alt="Service Image"
+                                class="w-24 h-24 object-cover rounded border">
+                            <input type="file" id="service_main_image" accept=".png,.jpg,.jpeg,.gif"
+                                class="w-full border rounded-lg px-3 py-2 mb-3" onchange="previewSelectedFile(event)">
+                        </div>
+    
                         <label class="block text-slate-600 mb-1">التصنيف</label>
                         <select id="service_category" class="w-full border rounded-lg px-3 py-2">
-                            <option>اختيار تصنيف</option>
-                            <option>تجميل</option>
-                            <option>صحة</option>
-                            <option>تصوير</option>
+                            <option value="">اختيار تصنيف</option>
+                            <option value="halls_palaces">القاعات والقصور</option>
+                            <option value="catering_buffet">الإعاشة والبوفيه</option>
+                            <option value="photo_video">التصوير والفيديو</option>
+                            <option value="beauty_makeup">التجميل والمكياج</option>
+                            <option value="entertainment_shows">العروض الترفيهية</option>
+                            <option value="transportation">النقل والمواصلات</option>
+                            <option value="security_guard">الحراسة والأمن</option>
+                            <option value="flowers_invitations">الورود والدعوات</option>
                         </select>
                     </div>
-
-                    <!-- الوصف -->
+    
                     <div x-show="activeModal==='details'" x-transition.duration.400ms>
                         <label class="block text-slate-600 mb-1">الوصف</label>
                         <textarea id="service_description" class="w-full border rounded-lg px-3 py-2" rows="5"></textarea>
                     </div>
-
-                    <!-- التسعير -->
+    
                     <div x-show="activeModal==='pricing'" x-transition.duration.400ms>
                         <label class="block text-slate-600 mb-1">السعر</label>
                         <input id="service_price" type="number" class="w-full border rounded-lg px-3 py-2 mb-3">
@@ -86,21 +92,18 @@
                             <option>دينار</option>
                         </select>
                     </div>
-
-                    <!-- المميزات -->
+    
                     <div x-show="activeModal==='features'" x-transition.duration.400ms>
                         <label class="block text-slate-600 mb-1">المميزات</label>
                         <textarea id="service_features" class="w-full border rounded-lg px-3 py-2" rows="4"></textarea>
                     </div>
-
-                    <!-- المعرض -->
+    
                     <div x-show="activeModal==='gallery'" x-transition.duration.400ms>
                         <label class="block text-slate-600 mb-1">رفع الصور</label>
                         <input id="service_gallery" type="file" multiple class="w-full border rounded-lg px-3 py-2">
                     </div>
-
-                    <!-- الخيارات -->
-                    <div x-show="activeModal==='options'" x-transition.duration.400ms>
+    
+                    <div x-show="activeModal==='optionsT'" x-transition.duration.400ms>
                         <div class="flex justify-between items-center mb-2">
                             <p class="text-slate-600">الخيارات المتاحة</p>
                             <button @click="addOption"
@@ -108,9 +111,9 @@
                                 <i class="ri-add-line"></i> إضافة خيار
                             </button>
                         </div>
-                        <template x-for="(option,i) in options" :key="i">
+                        <template x-for="(option,i) in options" :key="option.id || `new-${i}`">
                             <div class="flex items-center gap-2 mb-2">
-                                <input :id="`optionServices_${i}`" type="text" placeholder="اكتب خيار"
+                                <input :id="`optionServices_${i}`" type="text" x-model="options[i].name" placeholder="اسم الخيار"
                                     class="flex-1 border rounded-lg px-3 py-2">
                                 <button @click="removeOption(i)" class="text-red-500 hover:text-red-700">
                                     <i class="ri-close-line text-xl"></i>
@@ -118,8 +121,7 @@
                             </div>
                         </template>
                     </div>
-
-                    <!-- الإضافات -->
+    
                     <div x-show="activeModal==='addons'" x-transition.duration.400ms>
                         <div class="flex justify-between items-center mb-2">
                             <p class="text-slate-600">الإضافات</p>
@@ -128,11 +130,11 @@
                                 <i class="ri-add-line"></i> إضافة
                             </button>
                         </div>
-                        <template x-for="(addon,i) in addons" :key="i">
+                        <template x-for="(addon,i) in addons" :key="addon.id || `new-${i}`">
                             <div class="flex items-center gap-2 mb-2">
-                                <input :id="`addon_nameServices_${i}`" type="text" placeholder="اسم الإضافة"
+                                <input :id="`addon_nameServices_${i}`" type="text" x-model="addons[i].name" placeholder="اسم الإضافة"
                                     class="flex-1 border rounded-lg px-3 py-2">
-                                <input :id="`addon_priceServices_${i}`" type="number" placeholder="السعر"
+                                <input :id="`addon_priceServices_${i}`" type="number" x-model="addons[i].price" placeholder="السعر"
                                     class="w-32 border rounded-lg px-3 py-2">
                                 <button @click="removeAddon(i)" class="text-red-500 hover:text-red-700">
                                     <i class="ri-close-line text-xl"></i>
@@ -140,18 +142,15 @@
                             </div>
                         </template>
                     </div>
-
-                    <!-- الأيام والأوقات -->
+    
                     <div x-show="activeModal==='availability'" x-transition.duration.400ms>
                         <p class="text-slate-600 mb-3">حدد أيام وساعات العمل:</p>
-
-                        <!-- خيار عام: حسب الطلب -->
+    
                         <label class="flex items-center gap-2 mb-4">
                             <input id="on_demand" type="checkbox" x-model="onDemandGlobal" class="rounded">
                             <span>حسب الطلب (On Demand)</span>
                         </label>
-
-                        <!-- جدول الأيام -->
+    
                         <div x-show="!onDemandGlobal" class="overflow-x-auto">
                             <table id="servisesTable" class="w-full border text-sm text-slate-700">
                                 <thead class="bg-slate-100 text-slate-600">
@@ -186,21 +185,18 @@
                             </table>
                         </div>
                     </div>
-
+    
                 </div>
-
-                <!-- أزرار -->
+    
                 <div class="flex justify-between mt-6 border-t pt-3">
                     <button @click="openModalServices=false"
                         class="px-4 py-2 bg-slate-200 rounded-lg hover:bg-slate-300">إلغاء</button>
                     <button id="saveService"
                         class="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600">حفظ</button>
                 </div>
-
+    
             </div>
         </div>
-
-
     </div>
 
     <div class="space-y-8">
@@ -215,1130 +211,6 @@
 
         <!-- Tabs -->
         <div class="w-full">
-            <div id="tabs"
-                class="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 p-2 bg-primary/10 rounded-xl mb-6">
-                <button @click="activeTab='venues'" :class="{ 'active': activeTab==='venues' }" class="tab-btn">
-                    <i class="ri-building-2-line text-lg"></i>
-                    <span>القاعات والقصور</span>
-                </button>
-                <button @click="activeTab='catering'" :class="{ 'active': activeTab==='catering' }" class="tab-btn">
-                    <i class="ri-restaurant-2-line text-lg"></i>
-                    <span>الإعاشة والبوفيه</span>
-                </button>
-                <button @click="activeTab='photography'" :class="{ 'active': activeTab==='photography' }"
-                    class="tab-btn">
-                    <i class="ri-camera-line text-lg"></i>
-                    <span>التصوير والفيديو</span>
-                </button>
-                <button @click="activeTab='beauty'" :class="{ 'active': activeTab==='beauty' }" class="tab-btn">
-                    <i class="ri-magic-line text-lg"></i>
-                    <span>التجميل والمكياج</span>
-                </button>
-                <button @click="activeTab='entertainment'" :class="{ 'active': activeTab==='entertainment' }"
-                    class="tab-btn">
-                    <i class="ri-music-2-line text-lg"></i>
-                    <span>العروض الترفيهية</span>
-                </button>
-                <button @click="activeTab='transportation'" :class="{ 'active': activeTab==='transportation' }"
-                    class="tab-btn">
-                    <i class="ri-bus-line text-lg"></i>
-                    <span>النقل والمواصلات</span>
-                </button>
-                <button @click="activeTab='security'" :class="{ 'active': activeTab==='security' }" class="tab-btn">
-                    <i class="ri-shield-keyhole-line text-lg"></i>
-                    <span>الحراسة والأمن</span>
-                </button>
-                <button @click="activeTab='flowers_invitations'"
-                    :class="{ 'active': activeTab==='flowers_invitations' }" class="tab-btn">
-                    <i class="ri-flower-line text-lg"></i>
-                    <span>الورود والدعوات</span>
-                </button>
-            </div>
-
-            <!-- محتويات التابات -->
-            <div class="space-y-4">
-                <div x-show="activeTab==='venues'" x-transition.duration.500ms class="tab-content">
-                    <div style="opacity: 1; transform: none;">
-                        <div
-                            class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                            <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال القاعات والقصور</h3>
-                                <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا المجال.
-                                </p>
-                            </div>
-                            <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                <div class="space-y-4">
-                                    <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع المدعومة
-                                    </h2>
-                                    <ul class="space-y-3">
-                                        <li class="flex items-center gap-3 text-slate-600">
-                                            <div
-                                                class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-3 h-3 text-primary">
-                                                    <path
-                                                        d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                    </path>
-                                                    <path d="M13 5v2"></path>
-                                                    <path d="M13 17v2"></path>
-                                                    <path d="M13 11v2"></path>
-                                                </svg>
-                                            </div><span>قاعة زفاف</span>
-                                        </li>
-                                        <li class="flex items-center gap-3 text-slate-600">
-                                            <div
-                                                class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-3 h-3 text-primary">
-                                                    <path
-                                                        d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                    </path>
-                                                    <path d="M13 5v2"></path>
-                                                    <path d="M13 17v2"></path>
-                                                    <path d="M13 11v2"></path>
-                                                </svg>
-                                            </div><span>قصر أفراح</span>
-                                        </li>
-                                        <li class="flex items-center gap-3 text-slate-600">
-                                            <div
-                                                class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-3 h-3 text-primary">
-                                                    <path
-                                                        d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                    </path>
-                                                    <path d="M13 5v2"></path>
-                                                    <path d="M13 17v2"></path>
-                                                    <path d="M13 11v2"></path>
-                                                </svg>
-                                            </div><span>استراحة للمناسبات</span>
-                                        </li>
-                                        <li class="flex items-center gap-3 text-slate-600">
-                                            <div
-                                                class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-3 h-3 text-primary">
-                                                    <path
-                                                        d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                    </path>
-                                                    <path d="M13 5v2"></path>
-                                                    <path d="M13 17v2"></path>
-                                                    <path d="M13 11v2"></path>
-                                                </svg>
-                                            </div><span>منتجع خاص</span>
-                                        </li>
-                                        <li class="flex items-center gap-3 text-slate-600">
-                                            <div
-                                                class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-3 h-3 text-primary">
-                                                    <path
-                                                        d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                    </path>
-                                                    <path d="M13 5v2"></path>
-                                                    <path d="M13 17v2"></path>
-                                                    <path d="M13 11v2"></path>
-                                                </svg>
-                                            </div><span>صالة متعددة الأغراض</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                    <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات الخاصة
-                                    </h2>
-                                    <ul class="space-y-3">
-                                        <li class="flex items-start gap-3 text-slate-600"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                </polygon>
-                                            </svg><span>تحديد السعة والمساحة</span></li>
-                                        <li class="flex items-start gap-3 text-slate-600"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                </polygon>
-                                            </svg><span>إدارة المرافق (صوتيات، إضاءة، مواقف)</span></li>
-                                        <li class="flex items-start gap-3 text-slate-600"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                </polygon>
-                                            </svg><span>تقويم حجوزات متقدم</span></li>
-                                        <li class="flex items-start gap-3 text-slate-600"><svg
-                                                xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                <polygon
-                                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                </polygon>
-                                            </svg><span>إمكانية إضافة صور وفيديوهات للقاعة</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                    class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-2">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <path d="M8 12h8"></path>
-                                        <path d="M12 8v8"></path>
-                                    </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="activeTab==='catering'" x-transition.duration.500ms class="tab-content">
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                        aria-labelledby="radix-:rpt:-trigger-catering" id="radix-:rpt:-content-catering"
-                        tabindex="0"
-                        class="mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <div style="opacity: 1; transform: none;">
-                            <div
-                                class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                                <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                    <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال الإعاشة والبوفيه</h3>
-                                    <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا
-                                        المجال.</p>
-                                </div>
-                                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                    <div class="space-y-4">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع
-                                            المدعومة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>بوفيه مفتوح (غداء/عشاء)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>قوائم طعام مخصصة</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>خدمات ضيافة (قهوة وشاي)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>كيك وحلويات للمناسبات</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات
-                                            الخاصة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تحديد عدد الأفراد</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>اختيار أنواع الأطباق والمشروبات</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>إدارة الحساسية الغذائية</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تنسيق طاولات الطعام والديكور</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                        class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="w-4 h-4 ml-2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M8 12h8"></path>
-                                            <path d="M12 8v8"></path>
-                                        </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="activeTab==='photography'" x-transition.duration.500ms class="tab-content">
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                        aria-labelledby="radix-:rpt:-trigger-photography" id="radix-:rpt:-content-photography"
-                        tabindex="0"
-                        class="mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <div style="opacity: 1; transform: none;">
-                            <div
-                                class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                                <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                    <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال التصوير والفيديو</h3>
-                                    <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا
-                                        المجال.</p>
-                                </div>
-                                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                    <div class="space-y-4">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع
-                                            المدعومة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تصوير فوتوغرافي (زفاف، خطوبة، تخرج)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تصوير فيديو احترافي</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تصوير جوي (درون)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>ألبوم صور فاخر</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات
-                                            الخاصة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تحديد عدد ساعات التغطية</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>اختيار المصور/المصورة</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>معرض أعمال سابق</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تسليم المواد بجودة عالية</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                        class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="w-4 h-4 ml-2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M8 12h8"></path>
-                                            <path d="M12 8v8"></path>
-                                        </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="activeTab==='beauty'" x-show="activeTab==='beauty'" x-transition.duration.500ms
-                    class="tab-content">
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                        aria-labelledby="radix-:rpt:-trigger-beauty" id="radix-:rpt:-content-beauty" tabindex="0"
-                        class="mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <div style="opacity: 1; transform: none;">
-                            <div
-                                class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                                <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                    <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال التجميل والمكياج</h3>
-                                    <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا
-                                        المجال.</p>
-                                </div>
-                                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                    <div class="space-y-4">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع
-                                            المدعومة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>مكياج عروس</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تسريحات شعر</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>خدمات تجميل شاملة (مانيكير، باديكير)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>باكجات عناية بالبشرة</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات
-                                            الخاصة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>اختيار خبيرة التجميل</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تحديد نوع المكياج والتسريحة</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>إمكانية الحجز في الصالون أو المنزل</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>استخدام منتجات عالية الجودة</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                        class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="w-4 h-4 ml-2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M8 12h8"></path>
-                                            <path d="M12 8v8"></path>
-                                        </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="activeTab==='entertainment'" x-transition.duration.500ms class="tab-content">
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                        aria-labelledby="radix-:rpt:-trigger-entertainment" id="radix-:rpt:-content-entertainment"
-                        tabindex="0"
-                        class="mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <div style="opacity: 1; transform: none;">
-                            <div
-                                class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                                <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                    <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال العروض الترفيهية</h3>
-                                    <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا
-                                        المجال.</p>
-                                </div>
-                                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                    <div class="space-y-4">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع
-                                            المدعومة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>فرق موسيقية (DJ, فرقة شعبية)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>عروض ضوئية وصوتية</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>فقرات ترفيهية (ألعاب نارية، عروض بهلوانية)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تأجير معدات صوت وإضاءة</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات
-                                            الخاصة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تحديد نوع العرض ومدته</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>اختيار الفنانين أو الفرقة</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تنسيق مع متطلبات المكان</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>توفير المعدات اللازمة</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                        class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="w-4 h-4 ml-2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M8 12h8"></path>
-                                            <path d="M12 8v8"></path>
-                                        </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="activeTab==='transportation'" x-transition.duration.500ms class="tab-content">
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                        aria-labelledby="radix-:rpt:-trigger-transportation" id="radix-:rpt:-content-transportation"
-                        tabindex="0"
-                        class="mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <div style="opacity: 1; transform: none;">
-                            <div
-                                class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                                <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                    <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال النقل والمواصلات</h3>
-                                    <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا
-                                        المجال.</p>
-                                </div>
-                                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                    <div class="space-y-4">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع
-                                            المدعومة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>سيارات فاخرة للعروسين</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>حافلات لنقل الضيوف</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>خدمات صف السيارات (Valet Parking)</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات
-                                            الخاصة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تحديد نوع وعدد السيارات</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تحديد مسار الرحلة والمواعيد</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>سائقين محترفين</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تأمين شامل للركاب</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                        class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="w-4 h-4 ml-2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M8 12h8"></path>
-                                            <path d="M12 8v8"></path>
-                                        </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="activeTab==='security'" x-transition.duration.500ms class="tab-content">
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                        aria-labelledby="radix-:rpt:-trigger-security" id="radix-:rpt:-content-security"
-                        tabindex="0"
-                        class="mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <div style="opacity: 1; transform: none;">
-                            <div
-                                class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                                <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                    <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال الحراسة والأمن</h3>
-                                    <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا
-                                        المجال.</p>
-                                </div>
-                                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                    <div class="space-y-4">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع
-                                            المدعومة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>حراس أمن للمناسبات</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تأمين مداخل ومخارج القاعة</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                        stroke-linejoin="round" class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>كاميرات مراقبة</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات
-                                            الخاصة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24"
-                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تحديد عدد الحراس المطلوبين</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24"
-                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تنسيق خطة أمنية للمكان</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24"
-                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>فرق مدربة ومؤهلة</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                        class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="w-4 h-4 ml-2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M8 12h8"></path>
-                                            <path d="M12 8v8"></path>
-                                        </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="activeTab==='flowers_invitations'" x-transition.duration.500ms class="tab-content">
-                    <div data-state="active" data-orientation="horizontal" role="tabpanel"
-                        aria-labelledby="radix-:rpt:-trigger-flowers_invitations"
-                        id="radix-:rpt:-content-flowers_invitations" tabindex="0"
-                        class="mt-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                        <div style="opacity: 1; transform: none;">
-                            <div
-                                class="rounded-xl border bg-white text-slate-900 overflow-hidden shadow-lg border-t-4 border-primary">
-                                <div class="flex flex-col space-y-1.5 p-6 bg-slate-50">
-                                    <h3 class="font-semibold tracking-tight text-2xl">تفاصيل مجال الورود والدعوات</h3>
-                                    <p class="text-sm text-slate-500">استعرض الأنواع المدعومة والمميزات الخاصة بهذا
-                                        المجال.</p>
-                                </div>
-                                <div class="grid md:grid-cols-2 gap-x-8 gap-y-6 p-6">
-                                    <div class="space-y-4">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">🧩 الأنواع
-                                            المدعومة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                        class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تنسيق زهور (كوشة، طاولات)</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                        class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>باقات ورد للعروس</span>
-                                            </li>
-                                            <li class="flex items-center gap-3 text-slate-600">
-                                                <div
-                                                    class="w-5 h-5 bg-primary/20 rounded-md flex items-center justify-center shrink-0">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2"
-                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                        class="w-3 h-3 text-primary">
-                                                        <path
-                                                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z">
-                                                        </path>
-                                                        <path d="M13 5v2"></path>
-                                                        <path d="M13 17v2"></path>
-                                                        <path d="M13 11v2"></path>
-                                                    </svg>
-                                                </div><span>تصميم وطباعة بطاقات دعوة</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="space-y-4 md:border-r md:border-slate-200 md:pr-8">
-                                        <h2 class="font-bold text-lg text-slate-700 mb-4 border-b pb-2">⭐ المميزات
-                                            الخاصة</h2>
-                                        <ul class="space-y-3">
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24"
-                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>اختيار أنواع الزهور والألوان</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24"
-                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>تصاميم مبتكرة للدعوات</span></li>
-                                            <li class="flex items-start gap-3 text-slate-600"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24"
-                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="w-5 h-5 text-amber-400 mt-0.5 shrink-0">
-                                                    <polygon
-                                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                                    </polygon>
-                                                </svg><span>توصيل في الوقت المحدد</span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="items-center bg-slate-50 p-4 flex justify-start"><button
-                                        class="inline-flex items-center justify-center rounded-lg text-sm font-semibold ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="w-4 h-4 ml-2">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M8 12h8"></path>
-                                            <path d="M12 8v8"></path>
-                                        </svg>إنشاء باقة/خدمة جديدة في هذا المجال</button></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
             <div class="mt-6">
@@ -1394,18 +266,43 @@
     }
 </style>
 
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // ---- Helpers ----
         function runWhenAlpineReady(el, cb, timeout = 2000) {
-            // wait until el.__x exists (Alpine initialized), then call cb
             const start = Date.now();
             (function check() {
                 if (el && el.__x) return cb(el.__x);
                 if (Date.now() - start > timeout) return cb(null);
                 setTimeout(check, 50);
             })();
+        }
+
+        // Add these functions as they are missing in your original code
+        async function apiPost(url, data) {
+            const response = await fetch(url, {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+            return response.json();
+        }
+
+        async function apiDelete(url) {
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+            return response.json();
+        }
+
+        async function apiGet(url) {
+            const response = await fetch(url);
+            return response.json();
         }
 
         function safeQuery(selector) {
@@ -1419,7 +316,7 @@
         // ---- State ----
         let editingServiceId = null;
 
-        // ---- collectFormData (as you defined) ----
+        // ---- collectFormData (with updated logic) ----
         function collectFormData() {
             const formData = new FormData();
 
@@ -1433,7 +330,7 @@
             formData.append("service_features", getVal("service_features"));
 
             formData.append("provider_id", @json($provider->id));
-
+            formData.append("service_location", getVal("service_location"));
             const mainImageInput = document.getElementById("service_main_image");
             if (mainImageInput && mainImageInput.files && mainImageInput.files[0]) {
                 formData.append("service_main_image", mainImageInput.files[0]);
@@ -1446,17 +343,24 @@
                 }
             }
 
-            // options & addons by id patterns
-            document.querySelectorAll("[id^='optionServices_']").forEach((el, i) => {
-                formData.append(`options[${i}]`, el.value);
-            });
-
-            document.querySelectorAll("[id^='addon_nameServices_']").forEach((el, i) => {
-                formData.append(`addons[${i}][name]`, el.value);
-            });
-            document.querySelectorAll("[id^='addon_priceServices_']").forEach((el, i) => {
-                formData.append(`addons[${i}][price]`, el.value);
-            });
+            // Options and addons collection
+            const alpineEl = document.querySelector('#serviceModal');
+            if (alpineEl && alpineEl.__x) {
+                const data = alpineEl.__x.data;
+                data.options.forEach((opt, i) => {
+                    formData.append(`options[${i}][name]`, opt.name);
+                    if (opt.id) {
+                        formData.append(`options[${i}][id]`, opt.id);
+                    }
+                });
+                data.addons.forEach((addon, i) => {
+                    formData.append(`addons[${i}][name]`, addon.name);
+                    formData.append(`addons[${i}][price]`, addon.price);
+                    if (addon.id) {
+                        formData.append(`addons[${i}][id]`, addon.id);
+                    }
+                });
+            }
 
             formData.append("on_demand", (document.getElementById("on_demand") && document.getElementById(
                 "on_demand").checked) ? 1 : 0);
@@ -1480,7 +384,6 @@
             const modalEl = document.getElementById("serviceModal");
             if (!modalEl) return;
 
-            // basic fields
             const setIf = (id, val) => {
                 const el = modalEl.querySelector(`#${id}`);
                 if (el) el.value = val;
@@ -1491,22 +394,20 @@
             setIf("service_price", "");
             setIf("service_currency", "دولار");
             setIf("service_features", "");
-            if (modalEl.querySelector("#service_main_image")) modalEl.querySelector("#service_main_image")
-                .value = "";
+            if (modalEl.querySelector("#service_main_image")) modalEl.querySelector("#service_main_image").value = "";
             if (modalEl.querySelector("#service_gallery")) modalEl.querySelector("#service_gallery").value = "";
 
             const onDemand = modalEl.querySelector("#on_demand");
             if (onDemand) onDemand.checked = false;
 
-            // reset options/addons via Alpine safely
             runWhenAlpineReady(modalEl, function(alpine) {
                 if (!alpine) return;
-                // Assuming the x-data component has options & addons
-                Alpine.evaluate(modalEl, 'options = []');
-                Alpine.evaluate(modalEl, 'addons = []');
+                alpine.data.options = [];
+                alpine.data.addons = [];
+                alpine.data.activeModal = 'service';
+                alpine.data.onDemandGlobal = false;
             });
 
-            // reset servicedays
             const Servicedays = ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة"];
             Servicedays.forEach((day, idx) => {
                 const from = modalEl.querySelector(`#Serviceday_${idx}_from`);
@@ -1517,70 +418,47 @@
                 if (active) active.checked = false;
             });
 
-            // gallery info remove or reset
-            const galleryInfo = modalEl.querySelector("#gallery_info");
-            if (galleryInfo) galleryInfo.textContent = "";
+            const galleryInfo = modalEl.querySelector("#existingGalleryFiles");
+            if (galleryInfo) galleryInfo.innerHTML = "";
 
             editingServiceId = null;
             const saveBtn = modalEl.querySelector("#saveService");
             if (saveBtn) saveBtn.textContent = "حفظ الخدمة";
             const modalTitle = modalEl.querySelector("h2");
-            if (modalTitle) modalTitle.innerHTML =
-                '<i class="ri-tools-line text-pink-500"></i> إنشاء خدمة جديدة';
+            if (modalTitle) modalTitle.innerHTML = '<i class="ri-tools-line text-pink-500"></i> إنشاء خدمة جديدة';
         }
 
-        // ---- populateFormData (global) ----
+        // ---- populateFormDataForEditing (updated logic) ----
         window.populateFormData = function(service) {
-            // wrapper so older code that calls populateFormData(...) keeps working
             populateFormDataForEditing(service);
         };
 
-        // ---- populateFormDataForEditing ----
-
         function populateFormDataForEditing(serviceData) {
-            // تحويل features من JSON لو كانت string
             const features = typeof serviceData.features === 'string' ? JSON.parse(serviceData.features) :
                 serviceData.features;
+            editingServiceId = serviceData.id;
 
-            // -------------------
-            // الحقول الأساسية
-            // -------------------
             document.getElementById("service_name").value = serviceData.name || '';
             document.getElementById("service_category").value = serviceData.type || '';
             document.getElementById("service_description").value = serviceData.description || '';
             document.getElementById("service_price").value = serviceData.price || '';
             document.getElementById("service_features").value = features?.features || '';
+            document.getElementById("preview_service_main_image").src = features?.service_main_image ?
+                `/storage/${features.service_main_image}` :
+                '/images/default.png';
+            document.getElementById("service_location").value = serviceData.service_location || '';
 
-            // -------------------
-            // Alpine.js state
-            // -------------------
-            const alpineEl = document.querySelector('[x-data]');
-            if (alpineEl && alpineEl.__x) {
-                // خيارات: نضيف القيم بدون مسح القديم
-                if (features?.options && features.options.length) {
-                    features.options.forEach(opt => {
-                        if (!alpineEl.__x.$data.options.includes(opt)) {
-                            alpineEl.__x.$data.options.push(opt);
-                        }
-                    });
-                }
-
-                // اضافات: نضيف القيم بدون تكرار
-                if (features?.addons && features.addons.length) {
-                    features.addons.forEach(addon => {
-                        const exists = alpineEl.__x.$data.addons.some(a => a.name === addon.name && a
-                            .price == addon.price);
-                        if (!exists) alpineEl.__x.$data.addons.push(addon);
-                    });
-                }
-
-                // حسب الطلب
-                alpineEl.__x.$data.onDemandGlobal = features?.on_demand == "1" || features?.on_demand === true;
+            const alpineEl = document.querySelector('#serviceModal');
+            if (alpineEl) {
+                runWhenAlpineReady(alpineEl, function(alpine) {
+                    if (!alpine) return;
+                    alpine.data.options = features?.options || [];
+                    alpine.data.addons = features?.addons || [];
+                    alpine.data.onDemandGlobal = features?.on_demand == "1" || features?.on_demand === true;
+                    alpine.data.activeModal = 'service';
+                });
             }
 
-            // -------------------
-            // الأيام والأوقات
-            // -------------------
             const days = features?.days || [];
             days.forEach((day, idx) => {
                 const fromEl = document.getElementById(`Serviceday_${idx}_from`);
@@ -1591,9 +469,6 @@
                 if (activeEl) activeEl.checked = day.active == "1" ? true : false;
             });
 
-            // -------------------
-            // عرض معرض الصور القديمة
-            // -------------------
             const galleryContainerId = 'existingGalleryFiles';
             let galleryContainer = document.getElementById(galleryContainerId);
             if (!galleryContainer) {
@@ -1603,19 +478,17 @@
                 galleryContainer.classList.add('mt-2', 'text-sm', 'text-slate-600');
                 inputGallery.parentNode.insertBefore(galleryContainer, inputGallery.nextSibling);
             }
-
             galleryContainer.innerHTML = '';
             if (features?.gallery && features.gallery.length) {
                 const list = document.createElement('ul');
                 features.gallery.forEach(file => {
                     const li = document.createElement('li');
-                    li.textContent = file.split('/').pop(); // يظهر اسم الملف فقط
+                    li.textContent = file.split('/').pop();
                     list.appendChild(li);
                 });
                 galleryContainer.appendChild(list);
             }
         }
-
 
         // ---- save/update handler ----
         const saveBtn = document.getElementById("saveService");
@@ -1632,8 +505,7 @@
                 try {
                     let res;
                     if (editingServiceId) {
-                        const updateUrl = @json($RouteUpdateService).replace(':id',
-                            editingServiceId);
+                        const updateUrl = @json($RouteUpdateService).replace(':id', editingServiceId);
                         fd.append('_method', 'PUT');
                         res = await apiPost(updateUrl, fd);
                     } else {
@@ -1642,11 +514,10 @@
 
                     if (res && res.success) {
                         alert(res.message || (editingServiceId ? 'تم التحديث' : 'تم الحفظ'));
-                        resetForm();
-                        loadServices();
-                        // close modal
                         const modalEl = document.getElementById("serviceModal");
                         if (modalEl) Alpine.evaluate(modalEl, 'openModalServices = false');
+                        resetForm();
+                        loadServices();
                     } else {
                         alert(res.message || (editingServiceId ? 'فشل التحديث' : 'فشل الحفظ'));
                     }
@@ -1697,7 +568,6 @@
                     filteredServices.forEach((service, index) => {
                         const tr = document.createElement("tr");
                         tr.className = "hover:bg-gray-50";
-                        // ensure we escape JSON for attribute safely
                         const serviceJson = JSON.stringify(service).replace(/"/g, '&quot;');
                         tr.innerHTML = `
                             <td class="border px-4 py-2">${index + 1}</td>
@@ -1719,7 +589,6 @@
 
                 renderTable(services);
 
-                // search
                 const searchInput = document.getElementById("serviceSearch");
                 if (searchInput) {
                     searchInput.value = "";
@@ -1750,7 +619,6 @@
                 const deleteBtn = e.target.closest(".delete-service");
 
                 if (editBtn) {
-                    // parse service payload
                     const serviceData = editBtn.getAttribute('data-service');
                     let serviceObj = {};
                     try {
@@ -1762,7 +630,6 @@
                     resetForm();
                     populateFormDataForEditing(serviceObj);
 
-                    // open modal (handled in populate but safe)
                     const modalEl = document.getElementById("serviceModal");
                     if (modalEl) runWhenAlpineReady(modalEl, () => {
                         Alpine.evaluate(modalEl, 'openModalServices = true');
@@ -1793,27 +660,31 @@
 
         // ---- open button: reset form before open ----
         (function bindOpenButtons() {
-            // common patterns: button with @click="openModalServices = true" OR specific id/class
             const openBtns = document.querySelectorAll(
                 '[x-on\\:click="openModalServices = true"], button[data-open-service-modal]');
             openBtns.forEach(btn => {
-                btn.addEventListener('click', () => resetForm());
+                btn.addEventListener('click', () => {
+                    resetForm();
+                    // Ensure the modal is open, sometimes the click event is too fast for Alpine
+                    const modalEl = document.getElementById("serviceModal");
+                    if(modalEl) {
+                        runWhenAlpineReady(modalEl, () => {
+                            Alpine.evaluate(modalEl, 'openModalServices = true');
+                            Alpine.evaluate(modalEl, 'activeModal = "service"');
+                        });
+                    }
+                });
             });
         })();
 
         // ---- close behavior: reset when user explicitly closes modal via buttons with openModalServices=false ----
         document.addEventListener('click', function(e) {
-            if (e.target.matches(
-                    '[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]'
-                ) ||
-                e.target.closest(
-                    '[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]'
-                )) {
+            if (e.target.matches('[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]') ||
+                e.target.closest('[x-on\\:click="openModalServices=false"], [x-on\\:click="openModalServices = false"]')) {
                 resetForm();
             }
         });
 
-        // finally load initial services
         loadServices();
     });
 </script>
